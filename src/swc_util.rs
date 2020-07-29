@@ -236,6 +236,7 @@ impl DropSpan for Expr {
 
 /// Extracts regex string from an expression, using ScopeManager.
 /// If the passed expression is not regular expression, this will return `None`.
+#[allow(dead_code)]
 pub(crate) fn extract_regex(
   root_scope: &Scope,
   expr_span: Span,

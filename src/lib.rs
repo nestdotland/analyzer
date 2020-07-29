@@ -1,6 +1,4 @@
 // Copyright 2020 nest.land authors and friends.
-#[macro_use]
-extern crate lazy_static;
 
 #[macro_use]
 extern crate log;

@@ -1,22 +1,14 @@
 use crate::checks::Rule;
 use crate::diagnostic::Diagnostic;
-use crate::diagnostic::Location;
 use crate::scopes::Scope;
 use crate::scopes::ScopeVisitor;
 use crate::swc_ecma_ast;
-use crate::swc_ecma_parser;
 use crate::swc_ecma_parser::Syntax;
-use crate::swc_util::get_default_ts_config;
 use crate::swc_util::AstParser;
 use crate::swc_util::SwcDiagnosticBuffer;
-use std::collections::HashMap;
 use std::sync::Arc;
 use std::sync::Mutex;
 use std::time::Instant;
-use swc_common::comments::Comment;
-use swc_common::comments::CommentKind;
-use swc_common::comments::CommentMap;
-use swc_common::comments::Comments;
 use swc_common::SourceMap;
 use swc_common::Span;
 use swc_ecma_visit::Visit;
@@ -96,7 +88,7 @@ impl Analyzer {
       &file_name,
       self.syntax,
       &source_code,
-      |parse_result, comments| {
+      |parse_result, _comments| {
         let end_parse_module = Instant::now();
         debug!(
           "ast_parser.parse_module took {:#?}",
@@ -113,7 +105,6 @@ impl Analyzer {
   }
 
   pub fn filter_diagnostics(&self, context: Arc<Context>) -> Vec<Diagnostic> {
-    let start = Instant::now();
     let diagnostics = context.diagnostics.lock().unwrap();
     diagnostics.to_vec()
   }

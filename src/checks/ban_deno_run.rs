@@ -2,15 +2,12 @@
 
 use super::Context;
 use super::Rule;
-use crate::analyzer::Analyzer;
 use std::sync::Arc;
 use swc_common::Span;
 use swc_ecma_ast;
 use swc_ecma_ast::CallExpr;
 use swc_ecma_ast::Expr;
 use swc_ecma_ast::ExprOrSuper;
-use swc_ecma_ast::MemberExpr;
-use swc_ecma_ast::NewExpr;
 use swc_ecma_visit::Node;
 use swc_ecma_visit::Visit;
 
