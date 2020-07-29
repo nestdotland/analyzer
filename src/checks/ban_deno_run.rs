@@ -86,36 +86,27 @@ impl Visit for BanDenoRunVisitor {
       self.check_callee(expr, call_expr.span);
     }
   }
-
-  fn visit_new_expr(&mut self, new_expr: &NewExpr, _parent: &dyn Node) {
-    //  if let Expr::Ident(ident) = &*new_expr.callee {
-    //    self.check_callee(&ident.sym, new_expr.span);
-    //}
-  }
-}
-
-pub fn assert_ok<T: Rule + 'static>(source: &str) {
-  let rule = T::new();
-  let mut analyzer =
-    Analyzer::new(crate::swc_util::get_default_ts_config(), vec![rule]);
-  let diagnostics =
-    Analyzer::analyze(&mut analyzer, "asd".to_string(), source.to_string())
-      .unwrap();
-  if !diagnostics.is_empty() {
-    panic!("Unexpected diagnostics: {:#?}", diagnostics);
-  }
 }
 
 #[cfg(test)]
 mod tests {
+  use crate::tests::*;
   use super::*;
 
   #[test]
-  fn ban_deno_run() {
+  fn ban_deno_run_ok() {
     assert_ok::<BanDenoRun>(
       r#"
-      Deno.run();
+      Deno.compile();
       Deno.smthElse();
+    "#,
+    );
+  }
+
+  #[test]
+  fn ban_deno_run_err() {
+    assert_ok_err::<BanDenoRun>(
+      r#"
       Deno.run();
     "#,
     );

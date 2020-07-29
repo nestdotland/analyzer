@@ -8,6 +8,7 @@ extern crate log;
 pub mod analyzer;
 pub mod checks;
 pub mod diagnostic;
+mod tests;
 mod scopes;
 pub mod swc_util;
 
