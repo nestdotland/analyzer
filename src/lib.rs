@@ -8,7 +8,10 @@ extern crate log;
 pub mod analyzer;
 pub mod checks;
 pub mod diagnostic;
+
+#[cfg(test)]
 mod tests;
+
 mod scopes;
 pub mod swc_util;
 

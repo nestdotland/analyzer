@@ -1,7 +1,10 @@
 use crate::analyzer::Context;
 use std::sync::Arc;
 use swc_ecma_ast;
+
+#[cfg(test)]
 use crate::tests::*;
+
 pub mod ban_deno_run;
 
 pub trait Rule {

@@ -47,15 +47,15 @@ impl BanDenoRunVisitor {
         "Deno" => {
           let prop = self.get_prop(expr.prop.clone()).unwrap();
           match prop.as_str() {
-              "run" => {
-                  self.context.add_diagnostic(
-                    span,
-                    "no-deno-run",
-                    format!("`{}` call as function is not allowed", callee_name)
-                      .as_ref(),
-                  );
-              }
-              _ => {}
+            "run" => {
+              self.context.add_diagnostic(
+                span,
+                "no-deno-run",
+                format!("`{}` call as function is not allowed", callee_name)
+                  .as_ref(),
+              );
+            }
+            _ => {}
           }
         }
         _ => {}
@@ -90,8 +90,8 @@ impl Visit for BanDenoRunVisitor {
 
 #[cfg(test)]
 mod tests {
-  use crate::tests::*;
   use super::*;
+  use crate::tests::*;
 
   #[test]
   fn ban_deno_run_ok() {
