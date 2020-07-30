@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   rust:
-    name: deno_malware-${{ matrix.os }}
+    name: nest_analyzer-${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     strategy:
