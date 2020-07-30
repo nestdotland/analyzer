@@ -21,7 +21,7 @@ impl Rule for BanDenoRun {
   }
   /// Declare rule code
   fn code(&self) -> &'static str {
-    "ban-ts-comment"
+    "ban-deno-run"
   }
   /// Main entrypoint for module analysis
   fn check_module(&self, context: Arc<Context>, module: &swc_ecma_ast::Module) {
