@@ -2,7 +2,8 @@
 
 A Rust crate for analyzing broken and malicious JavaScript and TypeScript modules.
 
----
+![crates.io](https://img.shields.io/crates/v/nest_analyzer.svg)
+![ci](https://github.com/nestdotland/analyzer/workflows/ci/badge.svg)
 
 **NOTE**
 Work-in-progress
