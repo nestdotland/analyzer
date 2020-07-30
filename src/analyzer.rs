@@ -13,6 +13,7 @@ use swc_common::SourceMap;
 use swc_common::Span;
 use swc_ecma_visit::Visit;
 
+/// An analyzer context
 #[derive(Clone)]
 pub struct Context {
   pub file_name: String,
@@ -63,6 +64,7 @@ impl Context {
   }
 }
 
+/// An analyzer
 pub struct Analyzer {
   pub ast_parser: AstParser,
   pub syntax: Syntax,
@@ -70,6 +72,7 @@ pub struct Analyzer {
 }
 
 impl Analyzer {
+  /// Creates a new analyzer with an AstParser
   pub fn new(syntax: Syntax, rules: Vec<Box<dyn Rule>>) -> Self {
     Analyzer {
       ast_parser: AstParser::new(),
@@ -77,7 +80,7 @@ impl Analyzer {
       rules,
     }
   }
-
+  /// Main method to analyze source code with Rules.
   pub fn analyze(
     &mut self,
     file_name: String,

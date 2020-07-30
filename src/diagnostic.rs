@@ -27,6 +27,7 @@ impl Into<Location> for swc_common::Loc {
   }
 }
 
+/// A Diagnostic that will be returned after analysis
 #[derive(Clone, Debug)]
 pub struct Diagnostic {
   pub location: Location,
