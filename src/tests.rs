@@ -19,5 +19,5 @@ pub fn assert_ok_err<T: Rule + 'static>(source: &str) {
   let diagnostics =
     Analyzer::analyze(&mut analyzer, "test".to_string(), source.to_string())
       .unwrap();
-  assert!(diagnostics.len() > 0);
+  assert!(!diagnostics.is_empty());
 }

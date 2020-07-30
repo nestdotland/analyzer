@@ -4,7 +4,6 @@ use super::Context;
 use super::Rule;
 use std::sync::Arc;
 use swc_common::Span;
-use swc_ecma_ast;
 use swc_ecma_ast::CallExpr;
 use swc_ecma_ast::Expr;
 use swc_ecma_ast::ExprOrSuper;
@@ -37,25 +36,19 @@ impl BanDenoRunVisitor {
     Self { context }
   }
 
-  fn check_callee(&self, callee_name: &Box<Expr>, span: Span) {
-    if let Expr::Member(expr) = &callee_name.as_ref() {
+  fn check_callee(&self, callee_name: &Expr, span: Span) {
+    if let Expr::Member(expr) = &callee_name {
       let callee_name = self.get_obj(expr.obj.clone()).unwrap();
-      match callee_name.as_str() {
-        "Deno" => {
-          let prop = self.get_prop(expr.prop.clone()).unwrap();
-          match prop.as_str() {
-            "run" => {
-              self.context.add_diagnostic(
-                span,
-                "no-deno-run",
-                format!("`{}` call as function is not allowed", callee_name)
-                  .as_ref(),
-              );
-            }
-            _ => {}
-          }
+      if let "Deno" = callee_name.as_str() {
+        let prop = self.get_prop(expr.prop.clone()).unwrap();
+        if let "run" = prop.as_str() {
+          self.context.add_diagnostic(
+            span,
+            "no-deno-run",
+            format!("`{}` call as function is not allowed", callee_name)
+              .as_ref(),
+          );
         }
-        _ => {}
       }
     }
   }

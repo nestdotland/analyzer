@@ -13,7 +13,6 @@ use std::ops::Deref;
 use std::rc::Rc;
 use swc_common::Span;
 use swc_common::DUMMY_SP;
-use swc_ecma_ast;
 use swc_ecma_ast::ObjectPatProp;
 use swc_ecma_ast::Pat;
 use swc_ecma_visit::Node;

@@ -1,6 +1,5 @@
 use crate::analyzer::Context;
 use std::sync::Arc;
-use swc_ecma_ast;
 
 pub mod ban_deno_run;
 

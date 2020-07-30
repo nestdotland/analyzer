@@ -2,8 +2,6 @@
 // Copyright 2020 the Deno authors. All rights reserved. MIT license.
 // Copyright 2020 nest.land core team.
 
-use swc_common;
-
 #[derive(Debug, Clone, PartialEq)]
 pub struct Location {
   pub filename: String,

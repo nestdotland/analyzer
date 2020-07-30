@@ -9,7 +9,6 @@ use std::fmt;
 use std::sync::Arc;
 use std::sync::RwLock;
 use swc_atoms::js_word;
-use swc_common;
 use swc_common::comments::Comments;
 use swc_common::errors::Diagnostic;
 use swc_common::errors::DiagnosticBuilder;
@@ -21,7 +20,6 @@ use swc_common::Globals;
 use swc_common::SourceMap;
 use swc_common::Span;
 use swc_common::DUMMY_SP;
-use swc_ecma_ast;
 use swc_ecma_ast::{
   ComputedPropName, Expr, ExprOrSpread, Ident, Lit, Prop, PropName,
   PropOrSpread, Str, Tpl,
