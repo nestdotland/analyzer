@@ -1,8 +1,8 @@
 use crate::analyzer::Context;
 use std::sync::Arc;
 
-pub mod ban_deno_run;
 pub mod ban_deno_plugin;
+pub mod ban_deno_run;
 
 /// An analyzer rule trait is represented here
 ///
