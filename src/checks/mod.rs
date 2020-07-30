@@ -1,6 +1,7 @@
 use crate::analyzer::Context;
 use std::sync::Arc;
 
+pub mod ban_deno_plugin;
 pub mod ban_deno_run;
 
 /// An analyzer rule trait is represented here
@@ -8,6 +9,10 @@ pub mod ban_deno_run;
 /// # Example
 ///
 /// ```
+///  use nest_analyzer::checks::Rule;
+///  use std::sync::Arc;
+///  use nest_analyzer::analyzer::Context;
+///
 ///  pub struct ARule;
 ///
 ///  impl Rule for ARule {
@@ -35,7 +40,10 @@ pub trait Rule {
   fn code(&self) -> &'static str;
 }
 
-/// List of certain recommended rules
-pub fn get_recommended_rules() -> Vec<Box<dyn Rule>> {
-  vec![ban_deno_run::BanDenoRun::new()]
+/// Get all rules
+pub fn get_all_rules() -> Vec<Box<dyn Rule>> {
+  vec![
+    ban_deno_run::BanDenoRun::new(),
+    ban_deno_plugin::BanDenoPlugin::new(),
+  ]
 }

@@ -10,32 +10,32 @@ use swc_ecma_ast::ExprOrSuper;
 use swc_ecma_visit::Node;
 use swc_ecma_visit::Visit;
 
-/// Rule `ban-deno-run` (BanDenoRun)
-pub struct BanDenoRun;
+/// Rule `ban-deno-plugin` (BanDenoPlugin)
+pub struct BanDenoPlugin;
 
-/// Create rule for `ban-deno-run`
-impl Rule for BanDenoRun {
+/// Create rule for `ban-deno-plugin`
+impl Rule for BanDenoPlugin {
   /// Creates self reference
   fn new() -> Box<Self> {
-    Box::new(BanDenoRun)
+    Box::new(BanDenoPlugin)
   }
   /// Declare rule code
   fn code(&self) -> &'static str {
-    "ban-deno-run"
+    "ban-deno-plugin"
   }
   /// Main entrypoint for module analysis
   fn check_module(&self, context: Arc<Context>, module: &swc_ecma_ast::Module) {
-    let mut visitor = BanDenoRunVisitor::new(context);
+    let mut visitor = BanDenoPluginVisitor::new(context);
     visitor.visit_module(module, module);
   }
 }
 
 /// Create new module visitor
-struct BanDenoRunVisitor {
+struct BanDenoPluginVisitor {
   context: Arc<Context>,
 }
 
-impl BanDenoRunVisitor {
+impl BanDenoPluginVisitor {
   pub fn new(context: Arc<Context>) -> Self {
     Self { context }
   }
@@ -45,10 +45,10 @@ impl BanDenoRunVisitor {
       let callee_name = self.get_obj(expr.obj.clone()).unwrap();
       if let "Deno" = callee_name.as_str() {
         let prop = self.get_prop(expr.prop.clone()).unwrap();
-        if let "run" = prop.as_str() {
+        if let "openPlugin" = prop.as_str() {
           self.context.add_diagnostic(
             span,
-            "no-deno-run",
+            "ban-deno-plugin",
             format!("`{}` call as function is not allowed", callee_name)
               .as_ref(),
           );
@@ -75,7 +75,7 @@ impl BanDenoRunVisitor {
   }
 }
 
-impl Visit for BanDenoRunVisitor {
+impl Visit for BanDenoPluginVisitor {
   /// Visit every CallExpr and check for callee
   fn visit_call_expr(&mut self, call_expr: &CallExpr, _parent: &dyn Node) {
     if let ExprOrSuper::Expr(expr) = &call_expr.callee {
@@ -91,19 +91,19 @@ mod tests {
 
   #[test]
   fn ban_deno_run_ok() {
-    assert_ok::<BanDenoRun>(
+    assert_ok::<BanDenoPlugin>(
       r#"
       Deno.compile();
-      Deno.smthElse();
+      let core = Deno.core;
     "#,
     );
   }
 
   #[test]
   fn ban_deno_run_err() {
-    assert_ok_err::<BanDenoRun>(
+    assert_ok_err::<BanDenoPlugin>(
       r#"
-      Deno.run();
+      Deno.openPlugin();
     "#,
     );
   }
