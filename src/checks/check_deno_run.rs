@@ -82,21 +82,19 @@ impl Visit for CheckDenoRunVisitor {
   /// Visit every CallExpr and check for callee
   fn visit_call_expr(&mut self, call_expr: &CallExpr, _parent: &dyn Node) {
     if let ExprOrSuper::Expr(expr) = &call_expr.callee {
-      if let Some(_) = self.check_callee(expr, call_expr.span) {
+      if self.check_callee(expr, call_expr.span).is_some() {
         for args in &call_expr.args {
           if let Expr::Object(obj) = &*args.expr {
             for i in &obj.props {
               if let swc_ecma_ast::PropOrSpread::Prop(s) = &i {
                 if let swc_ecma_ast::Prop::KeyValue(prop) = &**s {
                   if let swc_ecma_ast::PropName::Ident(i) = &prop.key {
-                    if i.sym.to_string() == "cmd".to_string() {
+                    if i.sym.to_string() == "cmd" {
                       if let swc_ecma_ast::Expr::Lit(swc_ecma_ast::Lit::Str(
                         e,
                       )) = &*prop.value
                       {
-                        if e.value.to_string()
-                          == self.options.as_ref().unwrap().data
-                        {
+                        if e.value == self.options.as_ref().unwrap().data {
                           self.context.add_diagnostic(
                             e.span,
                             "check-deno-run",
