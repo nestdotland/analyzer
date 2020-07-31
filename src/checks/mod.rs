@@ -1,8 +1,10 @@
+use crate::analyzer::AnalyzeOptions;
 use crate::analyzer::Context;
 use std::sync::Arc;
 
 pub mod ban_deno_plugin;
 pub mod ban_deno_run;
+pub mod check_deno_run;
 
 /// An analyzer rule trait is represented here
 ///
@@ -11,7 +13,7 @@ pub mod ban_deno_run;
 /// ```
 ///  use nest_analyzer::checks::Rule;
 ///  use std::sync::Arc;
-///  use nest_analyzer::analyzer::Context;
+///  use nest_analyzer::analyzer::{AnalyzeOptions, Context};
 ///
 ///  pub struct ARule;
 ///
@@ -24,7 +26,7 @@ pub mod ban_deno_run;
 ///      "a-rule"
 ///    }
 ///
-///    fn check_module(&self, context: Arc<Context>, module: &swc_ecma_ast::Module) {
+///    fn check_module(&self, context: Arc<Context>, module: &swc_ecma_ast::Module, options: Option<AnalyzeOptions>) {
 ///      // implement your module visitor here
 ///    }
 ///  }
@@ -35,7 +37,12 @@ pub trait Rule {
   where
     Self: Sized;
   /// Module analysis method for the rule
-  fn check_module(&self, context: Arc<Context>, module: &swc_ecma_ast::Module);
+  fn check_module(
+    &self,
+    context: Arc<Context>,
+    module: &swc_ecma_ast::Module,
+    options: Option<AnalyzeOptions>,
+  );
   /// Code for a particular rule for example `no-foo-bar`
   fn code(&self) -> &'static str;
 }

@@ -22,6 +22,12 @@ pub struct Context {
   pub root_scope: Scope,
 }
 
+/// An analyzer options struct
+#[derive(Clone)]
+pub struct AnalyzeOptions {
+  pub data: String,
+}
+
 impl Context {
   pub fn create_diagnostic(
     &self,
@@ -85,6 +91,7 @@ impl Analyzer {
     &mut self,
     file_name: String,
     source_code: String,
+    options: Option<AnalyzeOptions>,
   ) -> Result<Vec<Diagnostic>, SwcDiagnosticBuffer> {
     let start = Instant::now();
     let r = self.ast_parser.parse_module(
@@ -98,7 +105,7 @@ impl Analyzer {
           end_parse_module - start
         );
         let module = parse_result?;
-        let diagnostics = self.check_module(file_name.clone(), module);
+        let diagnostics = self.check_module(file_name.clone(), module, options);
         Ok(diagnostics)
       },
     );
@@ -116,6 +123,7 @@ impl Analyzer {
     &self,
     file_name: String,
     module: swc_ecma_ast::Module,
+    options: Option<AnalyzeOptions>,
   ) -> Vec<Diagnostic> {
     let start = Instant::now();
     let mut scope_visitor = ScopeVisitor::default();
@@ -130,7 +138,7 @@ impl Analyzer {
     });
 
     for rule in &self.rules {
-      rule.check_module(context.clone(), &module);
+      rule.check_module(context.clone(), &module, options.clone());
     }
 
     let d = self.filter_diagnostics(context);
