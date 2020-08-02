@@ -1,5 +1,6 @@
 // Copyright 2020 nest.land core team.
 
+use super::AnalyzeOptions;
 use super::Context;
 use super::Rule;
 use std::sync::Arc;
@@ -24,7 +25,12 @@ impl Rule for BanDenoPlugin {
     "ban-deno-plugin"
   }
   /// Main entrypoint for module analysis
-  fn check_module(&self, context: Arc<Context>, module: &swc_ecma_ast::Module) {
+  fn check_module(
+    &self,
+    context: Arc<Context>,
+    module: &swc_ecma_ast::Module,
+    _opt: Option<AnalyzeOptions>,
+  ) {
     let mut visitor = BanDenoPluginVisitor::new(context);
     visitor.visit_module(module, module);
   }
@@ -96,6 +102,7 @@ mod tests {
       Deno.compile();
       let core = Deno.core;
     "#,
+      None,
     );
   }
 
@@ -105,6 +112,7 @@ mod tests {
       r#"
       Deno.openPlugin();
     "#,
+      None,
     );
   }
 }

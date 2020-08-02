@@ -11,6 +11,8 @@ const clippy = [
   "--",
   "-D",
   "clippy::all",
+  "-A",
+  "clippy::cmp-owned",
 ];
 
 let s1 = await Deno.run({
