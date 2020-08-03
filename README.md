@@ -8,9 +8,14 @@ A Rust crate for analyzing broken and malicious JavaScript and TypeScript module
 **NOTE**
 Work-in-progress
 
-Current Rules:
+Rules:
 
 - [x] `ban-deno-run` - Report if module uses `Deno.run();`
+- [x] `ban-deno-plugin` - Report if module uses `Deno.openPlugin();`
+
+Dynamic rules:
+
+- [x] `check-deno-run` - Check if the given command is executed with `Deno.run();`
 
 ## Contributing
 

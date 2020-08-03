@@ -56,8 +56,7 @@ impl BanDenoPluginVisitor {
           self.context.add_diagnostic(
             span,
             "ban-deno-plugin",
-            format!("`{}` call as function is not allowed", callee_name)
-              .as_ref(),
+            "`Deno.openPlugin` call as function is not allowed".as_ref(),
           );
         }
       }

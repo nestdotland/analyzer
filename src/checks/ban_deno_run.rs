@@ -56,8 +56,7 @@ impl BanDenoRunVisitor {
           self.context.add_diagnostic(
             span,
             "no-deno-run",
-            format!("`{}` call as function is not allowed", callee_name)
-              .as_ref(),
+            "`Deno.run` call as function is not allowed".as_ref(),
           );
         }
       }
