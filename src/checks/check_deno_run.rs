@@ -50,10 +50,13 @@ impl CheckDenoRunVisitor {
   fn check_callee(&self, callee_name: &Expr, _span: Span) -> Option<bool> {
     if let Expr::Member(expr) = &callee_name {
       // TODO(divy-work): An ugly workaround to prevent panics.
-      let callee_name =
-        self.get_obj(expr.obj.clone()).unwrap_or("".to_string());
+      let callee_name = self
+        .get_obj(expr.obj.clone())
+        .unwrap_or_else(|| "".to_string());
       if let "Deno" = callee_name.as_str() {
-        let prop = self.get_prop(expr.prop.clone()).unwrap_or("".to_string());
+        let prop = self
+          .get_prop(expr.prop.clone())
+          .unwrap_or_else(|| "".to_string());
         if let "run" = prop.as_str() {
           return Some(true);
         }

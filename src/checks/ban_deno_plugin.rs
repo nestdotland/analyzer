@@ -47,7 +47,7 @@ impl BanDenoPluginVisitor {
     Self { context }
   }
   /// Check for `Deno.run` in a CallExpr
-  fn check_callee(&self, callee_name: &Expr, span: Span) -> () {
+  fn check_callee(&self, callee_name: &Expr, span: Span) {
     if let Expr::Member(expr) = &callee_name {
       let callee_name = unwrap_or_return!(self.get_obj(expr.obj.clone()));
       if let "Deno" = callee_name.as_str() {
