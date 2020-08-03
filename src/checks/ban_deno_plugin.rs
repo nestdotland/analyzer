@@ -3,6 +3,7 @@
 use super::AnalyzeOptions;
 use super::Context;
 use super::Rule;
+use crate::unwrap_or_return;
 use std::sync::Arc;
 use swc_common::Span;
 use swc_ecma_ast::CallExpr;
@@ -46,11 +47,11 @@ impl BanDenoPluginVisitor {
     Self { context }
   }
   /// Check for `Deno.run` in a CallExpr
-  fn check_callee(&self, callee_name: &Expr, span: Span) {
+  fn check_callee(&self, callee_name: &Expr, span: Span) -> () {
     if let Expr::Member(expr) = &callee_name {
-      let callee_name = self.get_obj(expr.obj.clone()).unwrap();
+      let callee_name = unwrap_or_return!(self.get_obj(expr.obj.clone()));
       if let "Deno" = callee_name.as_str() {
-        let prop = self.get_prop(expr.prop.clone()).unwrap();
+        let prop = unwrap_or_return!(self.get_prop(expr.prop.clone()));
         if let "openPlugin" = prop.as_str() {
           self.context.add_diagnostic(
             span,

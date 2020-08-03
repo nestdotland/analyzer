@@ -12,6 +12,7 @@ mod tests;
 
 mod scopes;
 pub mod swc_util;
+mod tools;
 
 pub use swc_atoms;
 pub use swc_common;

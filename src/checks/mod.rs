@@ -52,5 +52,14 @@ pub fn get_all_rules() -> Vec<Box<dyn Rule>> {
   vec![
     ban_deno_run::BanDenoRun::new(),
     ban_deno_plugin::BanDenoPlugin::new(),
+    check_deno_run::CheckDenoRun::new(),
+  ]
+}
+
+// Get all rules that do are static (don't take any arguments)
+pub fn get_static_rules() -> Vec<Box<dyn Rule>> {
+  vec![
+    ban_deno_run::BanDenoRun::new(),
+    ban_deno_plugin::BanDenoPlugin::new(),
   ]
 }
