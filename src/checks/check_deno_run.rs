@@ -104,7 +104,7 @@ impl Visit for CheckDenoRunVisitor {
                             e.span,
                             "check-deno-run",
                             format!(
-                              "`{}` call as function is not allowed",
+                              "Executing `{}` from `Deno.run` is not allowed",
                               &e.value.to_string()
                             )
                             .as_ref(),
