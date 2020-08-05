@@ -1,0 +1,18 @@
+[package]
+name = "nest_analyzer_wasm"
+version = "0.0.1"
+edition = "2018"
+description = "Analyze and Detect broken and malicious JS/TS modules."
+authors = ["Divy Srivastava <dj.srivastava23@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/nestdotland/analyzer"
+documentation = "http://nestdotland.github.io/analyzer/nest_analyzer/index.html"
+
+[dependencies]
+nest_analyzer = { path = "../" }
+wasm-bindgen = "0.2.64"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "nest_analyzer_wasm"
+path = "lib.rs"
