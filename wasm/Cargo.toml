@@ -13,6 +13,6 @@ nest_analyzer = { path = "../" }
 wasm-bindgen = "0.2.64"
 
 [lib]
-crate-type = ["cdylib", "lib"]
+crate-type = ["cdylib", "rlib"]
 name = "nest_analyzer_wasm"
 path = "lib.rs"
