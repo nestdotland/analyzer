@@ -1,7 +1,7 @@
 import { pascalCase } from "https://deno.land/x/case/mod.ts";
 
 function template(ruleCode: string = Deno.args[0]): string {
-    return `
+  return `
 // Copyright 2020 nest.land core team.
 
 use super::AnalyzeOptions;
@@ -119,7 +119,7 @@ mod tests {
     );
   }
 }
-`
+`;
 }
 
 console.log(template());
