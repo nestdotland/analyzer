@@ -59,6 +59,10 @@ jobs:
       - name: Lint
         run: deno run --allow-run ./tools/lint.ts --release
 
+      - name: WASM
+        if: ${{ matrix.os == 'ubuntu-16.04' }}
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh && deno run -A ./tools/wasm.ts
+
       - name: Build Documentation
         run: cargo doc --all --no-deps
 
