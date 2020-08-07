@@ -8,7 +8,7 @@ use crate::swc_util::AstParser;
 use crate::swc_util::SwcDiagnosticBuffer;
 use std::sync::Arc;
 use std::sync::Mutex;
-use std::time::Instant;
+use instant::Instant;
 use swc_common::SourceMap;
 use swc_common::Span;
 use swc_ecma_visit::Visit;

@@ -22,5 +22,5 @@ path = "lib.rs"
 wasm-opt = false
 
 [profile.release]
-lto = true
+lto = false
 opt-level = "z"
