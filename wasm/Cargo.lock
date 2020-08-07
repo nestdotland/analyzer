@@ -352,6 +352,7 @@ dependencies = [
 name = "nest_analyzer_wasm"
 version = "0.0.1"
 dependencies = [
+ "darling_core",
  "nest_analyzer",
  "wasm-bindgen",
 ]

@@ -5,17 +5,17 @@ use nest_analyzer::swc_util::get_default_ts_config;
 use nest_analyzer::analyzer::AnalyzeOptions;
 
 #[wasm_bindgen]
-pub fn analyze(src: &str) -> Result<String> {
+pub fn analyze(src: &str) -> String {
     let mut analyzer = Analyzer::new(get_default_ts_config(), get_static_rules());
     let diagnostics = Analyzer::analyze(
       &mut analyzer,
       "test".to_string(),
       src.to_string(),
-      AnalyzeOptions::default(),
+      Default::default(),
     )
     .unwrap();
     if !diagnostics.is_empty() {
       panic!("Unexpected diagnostics: {:#?}", diagnostics);
     }
-    Ok("Ok".to_string())
-}
+    "Ok".to_string()
+  }

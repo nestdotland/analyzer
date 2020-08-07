@@ -11,8 +11,16 @@ documentation = "http://nestdotland.github.io/analyzer/nest_analyzer/index.html"
 [dependencies]
 nest_analyzer = { path = "../" }
 wasm-bindgen = "0.2.64"
+darling_core = "0.10.2"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
 name = "nest_analyzer_wasm"
 path = "lib.rs"
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false
+
+[profile.release]
+lto = true
+opt-level = "z"

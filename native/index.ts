@@ -1,4 +1,4 @@
-import init, { source, analyze } from "../wasm/wasm.js";
+import init, { source, analyze } from "../wasm.js";
 
 await init(source);
 

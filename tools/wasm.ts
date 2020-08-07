@@ -1,3 +1,7 @@
+
+import { encode } from "https://deno.land/std@0.61.0/encoding/base64.ts";
+import { compress } from "https://deno.land/x/lz4@v0.1.2/mod.ts";
+
 const encoder = new TextEncoder();
 
 async function requires(...executables: string[]) {
@@ -47,12 +51,23 @@ await run(
   ["wasm-pack", "build", "--target", "web", "--release", "./wasm"],
 );
 
-const wasm = await Deno.readFile("pkg/nest_analyzer_bg.wasm");
+const wasm = await Deno.readFile("wasm/pkg/nest_analyzer_wasm_bg.wasm");
+const compressed = compress(wasm);
+log(
+  `compressed wasm using lz4, size reduction: ${wasm.length -
+    compressed.length} bytes`,
+);
+const encoded = encode(compressed);
+log(
+  `encoded wasm using base64, size increase: ${encoded.length -
+    compressed.length} bytes`,
+);
 
 log("inlining wasm in js");
-const source = `export const source = ${wasm};`;
+const source = `import * as lz4 from "https://deno.land/x/lz4@v0.1.2/mod.ts";
+                export const source = lz4.decompress(Uint8Array.from(atob("${encoded}"), c => c.charCodeAt(0)));`;
 
-const init = await Deno.readTextFile("pkg/nest_analyzer.js");
+const init = await Deno.readTextFile("wasm/pkg/nest_analyzer_wasm.js");
 
 log(`writing output to file ("wasm.js")`);
 await Deno.writeFile("wasm.js", encoder.encode(`${source}\n${init}`));
