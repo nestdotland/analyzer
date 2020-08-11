@@ -1,5 +1,3 @@
-import init, { source, analyze } from "../wasm.js";
-
-await init(source);
+import { analyze } from "../wasm.js";
 
 console.log(analyze("Deno.run()"))

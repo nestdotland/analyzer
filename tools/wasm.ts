@@ -1,4 +1,3 @@
-
 import { encode } from "https://deno.land/std@0.61.0/encoding/base64.ts";
 import { compress } from "https://deno.land/x/lz4@v0.1.2/mod.ts";
 
@@ -47,8 +46,15 @@ if (!(await Deno.stat("Cargo.toml")).isFile) {
 }
 
 await run(
-  "building using wasm-pack",
-  ["wasm-pack", "build", "--target", "web", "--release", "./wasm"],
+  "build source",
+  "cargo build --release --target wasm32-unknown-unknown".split(" "),
+);
+
+await run(
+  "building using wasm-bindgen",
+  // ["wasm-pack", "build", "--target", "no-modules", "--release", "./wasm"],
+  "wasm-bindgen /media/divy/Data/data/Projects/nest_analyzer/wasm/target/wasm32-unknown-unknown/release/nest_analyzer_wasm.wasm --out-dir ./wasm/pkg --target deno"
+    .split(" "),
 );
 
 const wasm = await Deno.readFile("wasm/pkg/nest_analyzer_wasm_bg.wasm");
