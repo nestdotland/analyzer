@@ -53,8 +53,7 @@ await run(
 await run(
   "building using wasm-bindgen",
   // ["wasm-pack", "build", "--target", "no-modules", "--release", "./wasm"],
-  "wasm-bindgen /media/divy/Data/data/Projects/nest_analyzer/wasm/target/wasm32-unknown-unknown/release/nest_analyzer_wasm.wasm --out-dir ./wasm/pkg --target deno"
-    .split(" "),
+  ["wasm-pack", "build", "--target", "web", "--release", "./wasm"],
 );
 
 const wasm = await Deno.readFile("wasm/pkg/nest_analyzer_wasm_bg.wasm");
