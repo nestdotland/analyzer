@@ -65,7 +65,7 @@ impl Visit for DependencyVisitor {
   }
 }
 
-#[allow(unused)]
+// Analyze the dependencies of a source file
 pub fn analyze_dependencies(
   filename: &str,
   source_code: &str,
