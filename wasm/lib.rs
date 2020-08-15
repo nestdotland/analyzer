@@ -4,6 +4,10 @@ use nest_analyzer::checks::get_static_rules;
 use nest_analyzer::swc_util::get_default_ts_config;
 use nest_analyzer::analyzer::AnalyzeOptions;
 
+#[cfg(feature = "wee_alloc")]
+#[global_allocator]
+static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+
 #[wasm_bindgen]
 pub fn analyze(src: &str) -> String {
     let mut analyzer = Analyzer::new(get_default_ts_config(), get_static_rules());
