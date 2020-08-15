@@ -67,6 +67,7 @@ impl Visit for DependencyVisitor {
 
 #[allow(unused)]
 pub fn analyze_dependencies(
+  filename: &str,
   source_code: &str,
   analyze_dynamic_imports: bool,
 ) -> Result<Vec<String>, SwcDiagnosticBuffer> {
@@ -74,7 +75,7 @@ pub fn analyze_dependencies(
   let mut ts_config = TsConfig::default();
   ts_config.dynamic_import = true;
   let syntax = Syntax::Typescript(ts_config);
-  parser.parse_module("root.ts", syntax, source_code, |parse_result, _| {
+  parser.parse_module(filename, syntax, source_code, |parse_result, _| {
     let module = parse_result?;
     let mut collector = DependencyVisitor {
       dependencies: vec![],
