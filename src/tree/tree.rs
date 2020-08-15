@@ -1,3 +1,5 @@
+// Copyright 2020 nest.land core team.
+
 use crate::swc_util::{AstParser, SwcDiagnosticBuffer};
 use swc_ecma_ast::{CallExpr, ExportAll, ImportDecl, NamedExport};
 use swc_ecma_parser::Syntax;
