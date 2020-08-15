@@ -98,7 +98,7 @@ export * from "./bar.ts";
 "#;
 
   let dependencies =
-    analyze_dependencies(source, false).expect("Failed to parse");
+    analyze_dependencies("index.ts", source, false).expect("Failed to parse");
   assert_eq!(
     dependencies,
     vec![
@@ -123,7 +123,7 @@ const d = call("yo");
 "#;
 
   let dependencies =
-    analyze_dependencies(source, true).expect("Failed to parse");
+    analyze_dependencies("index.ts", source, true).expect("Failed to parse");
   assert_eq!(
     dependencies,
     vec![
