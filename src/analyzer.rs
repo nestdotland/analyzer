@@ -88,17 +88,13 @@ impl Analyzer {
     source_code: String,
     options: Option<AnalyzeOptions>,
   ) -> Result<Vec<Diagnostic>, SwcDiagnosticBuffer> {
-    let r = self.ast_parser.parse_module(
+    let parse_result = self.ast_parser.parse_module(
       &file_name,
       self.syntax,
       &source_code,
-      |parse_result, _comments| {
-        let module = parse_result?;
-        let diagnostics = self.check_module(file_name.clone(), module, options);
-        Ok(diagnostics)
-      },
-    );
-    r
+    )?;
+    let diagnostics = self.check_module(file_name.clone(), parse_result, options);
+    Ok(diagnostics)
   }
 
   pub fn filter_diagnostics(&self, context: Arc<Context>) -> Vec<Diagnostic> {

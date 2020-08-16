@@ -9,7 +9,8 @@ use std::fmt;
 use std::sync::Arc;
 use std::sync::RwLock;
 use swc_atoms::js_word;
-use swc_common::comments::Comments;
+use swc_common::comments::SingleThreadedComments;
+use swc_ecma_parser::StringInput;
 use swc_common::errors::Diagnostic;
 use swc_common::errors::DiagnosticBuilder;
 use swc_common::errors::Emitter;
@@ -28,7 +29,6 @@ use swc_ecma_parser::lexer::Lexer;
 use swc_ecma_parser::EsConfig;
 use swc_ecma_parser::JscTarget;
 use swc_ecma_parser::Parser;
-use swc_ecma_parser::SourceFileInput;
 use swc_ecma_parser::Syntax;
 use swc_ecma_parser::TsConfig;
 use swc_ecma_visit::Fold;
@@ -129,6 +129,7 @@ pub struct AstParser {
   pub source_map: Arc<SourceMap>,
   pub handler: Handler,
   pub globals: Globals,
+  pub comments: SingleThreadedComments,
 }
 
 impl AstParser {
@@ -148,20 +149,17 @@ impl AstParser {
       buffered_error,
       source_map: Arc::new(SourceMap::default()),
       handler,
+      comments: SingleThreadedComments::default(),
       globals: Globals::new(),
     }
   }
 
-  pub fn parse_module<F, R>(
+  pub fn parse_module(
     &self,
     file_name: &str,
     syntax: Syntax,
     source_code: &str,
-    callback: F,
-  ) -> R
-  where
-    F: FnOnce(Result<swc_ecma_ast::Module, SwcDiagnosticBuffer>, Comments) -> R,
-  {
+  ) -> Result<swc_ecma_ast::Module, SwcDiagnosticBuffer> {
     swc_common::GLOBALS.set(&self.globals, || {
       let swc_source_file = self.source_map.new_source_file(
         FileName::Custom(file_name.to_string()),
@@ -170,23 +168,20 @@ impl AstParser {
 
       let buffered_err = self.buffered_error.clone();
 
-      let comments = Comments::default();
       let lexer = Lexer::new(
         syntax,
         JscTarget::Es2019,
-        SourceFileInput::from(&*swc_source_file),
-        Some(&comments),
+        StringInput::from(&*swc_source_file),
+        Some(&self.comments),
       );
 
       let mut parser = Parser::new_from(lexer);
 
-      let parse_result = parser.parse_module().map_err(move |err| {
+      parser.parse_module().map_err(move |err| {
         let mut diagnostic_builder = err.into_diagnostic(&self.handler);
         diagnostic_builder.emit();
         SwcDiagnosticBuffer::from_swc_error(buffered_err, self)
-      });
-
-      callback(parse_result, comments)
+      })
     })
   }
 
