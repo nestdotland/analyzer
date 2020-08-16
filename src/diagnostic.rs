@@ -2,7 +2,7 @@
 // Copyright 2020 the Deno authors. All rights reserved. MIT license.
 // Copyright 2020 nest.land core team.
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Location {
