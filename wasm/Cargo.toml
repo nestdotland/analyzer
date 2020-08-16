@@ -1,0 +1,21 @@
+[package]
+name = "nest_analyzer_wasm"
+description = "WASM module for the nest_analyzer"
+version = "0.1.0"
+authors = ["Divy Srivastava"]
+edition = "2018"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2.64"
+wee_alloc = { version = "0.4.5", optional = true }
+
+[profile.release]
+lto = true
+opt-level = "z"
+
+[features]
+default = ["wee_alloc"]

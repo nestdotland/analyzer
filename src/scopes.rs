@@ -737,20 +737,11 @@ mod tests {
   fn test_scopes(source_code: &str) -> Scope {
     let ast_parser = AstParser::new();
     let syntax = swc_util::get_default_ts_config();
-    ast_parser
-      .parse_module(
-        "file_name.ts",
-        syntax,
-        source_code,
-        |parse_result, _comments| -> Result<Scope, SwcDiagnosticBuffer> {
-          let module = parse_result?;
-          let mut scope_visitor = ScopeVisitor::default();
-          let root_scope = scope_visitor.get_root_scope();
-          scope_visitor.visit_module(&module, &module);
-          Ok(root_scope)
-        },
-      )
-      .unwrap()
+    let module = ast_parser.parse_module("file_name.ts", syntax, source_code);
+    let mut scope_visitor = ScopeVisitor::default();
+    let root_scope = scope_visitor.get_root_scope();
+    scope_visitor.visit_module(&module, &module);
+    root_scope
   }
 
   #[test]
