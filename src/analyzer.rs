@@ -88,12 +88,12 @@ impl Analyzer {
     source_code: String,
     options: Option<AnalyzeOptions>,
   ) -> Result<Vec<Diagnostic>, SwcDiagnosticBuffer> {
-    let parse_result = self.ast_parser.parse_module(
-      &file_name,
-      self.syntax,
-      &source_code,
-    )?;
-    let diagnostics = self.check_module(file_name.clone(), parse_result, options);
+    let parse_result =
+      self
+        .ast_parser
+        .parse_module(&file_name, self.syntax, &source_code)?;
+    let diagnostics =
+      self.check_module(file_name.clone(), parse_result, options);
     Ok(diagnostics)
   }
 
