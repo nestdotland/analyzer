@@ -22,6 +22,7 @@ pub fn tree(filename: String, src: String) -> Array {
     .collect()
 }
 
+#[wasm_bindgen]
 pub fn analyze(src: String) -> Array {
   let mut analyzer = Analyzer::new(get_default_ts_config(), get_static_rules());
   Analyzer::analyze(&mut analyzer, "test.ts".to_string(), src, None)
