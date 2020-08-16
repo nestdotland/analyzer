@@ -732,12 +732,13 @@ mod tests {
   use super::*;
   use crate::swc_util;
   use crate::swc_util::AstParser;
-  use crate::swc_util::SwcDiagnosticBuffer;
 
   fn test_scopes(source_code: &str) -> Scope {
     let ast_parser = AstParser::new();
     let syntax = swc_util::get_default_ts_config();
-    let module = ast_parser.parse_module("file_name.ts", syntax, source_code);
+    let module = ast_parser
+      .parse_module("file_name.ts", syntax, source_code)
+      .unwrap();
     let mut scope_visitor = ScopeVisitor::default();
     let root_scope = scope_visitor.get_root_scope();
     scope_visitor.visit_module(&module, &module);
