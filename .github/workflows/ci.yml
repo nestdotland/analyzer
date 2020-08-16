@@ -58,9 +58,14 @@ jobs:
 
       - name: Lint
         run: deno run --allow-run ./tools/lint.ts --release
+        
+      - name: Build WASM
+        if: contains(matrix.os, 'ubuntu')
+        run: cd wasm && deno run -A ./scripts/build.ts
 
       - name: Build Documentation
-        run: cargo doc --all --no-deps
+        if: contains(matrix.os, 'ubuntu')
+        run: cd .. && cargo doc --all --no-deps
 
       - name: Deploy Docs
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && matrix.os == 'ubuntu-16.04' }}
