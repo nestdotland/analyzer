@@ -48,14 +48,13 @@ impl Context {
       .expect("error loading snippet")
       .len();
 
-    let diagnostic = Diagnostic {
+    Diagnostic {
       location: location.into(),
       message: message.to_string(),
       code: code.to_string(),
       line_src,
       snippet_length,
-    };
-    diagnostic
+    }
   }
 
   pub fn add_diagnostic(&self, span: Span, code: &str, message: &str) {
@@ -92,8 +91,7 @@ impl Analyzer {
       self
         .ast_parser
         .parse_module(&file_name, self.syntax, &source_code)?;
-    let diagnostics =
-      self.check_module(file_name.clone(), parse_result, options);
+    let diagnostics = self.check_module(file_name, parse_result, options);
     Ok(diagnostics)
   }
 
@@ -123,8 +121,6 @@ impl Analyzer {
       rule.check_module(context.clone(), &module, options.clone());
     }
 
-    let d = self.filter_diagnostics(context);
-
-    d
+    self.filter_diagnostics(context)
   }
 }
