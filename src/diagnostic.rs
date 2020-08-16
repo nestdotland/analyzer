@@ -2,7 +2,9 @@
 // Copyright 2020 the Deno authors. All rights reserved. MIT license.
 // Copyright 2020 nest.land core team.
 
-#[derive(Debug, Clone, PartialEq)]
+use serde::{Serialize, Deserialize};
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Location {
   pub filename: String,
   pub line: usize,
@@ -28,7 +30,7 @@ impl Into<Location> for swc_common::Loc {
 }
 
 /// A Diagnostic that will be returned after analysis
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Diagnostic {
   pub location: Location,
   pub message: String,
