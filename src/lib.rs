@@ -1,9 +1,6 @@
 // Copyright 2020 nest.land authors and friends.
 #![feature(box_patterns)]
 
-#[macro_use]
-extern crate log;
-
 pub mod analyzer;
 pub mod checks;
 pub mod diagnostic;

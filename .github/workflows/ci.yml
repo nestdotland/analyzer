@@ -58,8 +58,13 @@ jobs:
 
       - name: Lint
         run: deno run --allow-run ./tools/lint.ts --release
+        
+      - name: Build WASM
+        if: contains(matrix.os, 'ubuntu')
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh && cd wasm && deno run -A ./scripts/build.ts
 
       - name: Build Documentation
+        if: contains(matrix.os, 'ubuntu')
         run: cargo doc --all --no-deps
 
       - name: Deploy Docs

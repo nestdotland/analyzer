@@ -8,7 +8,6 @@ use crate::swc_util::AstParser;
 use crate::swc_util::SwcDiagnosticBuffer;
 use std::sync::Arc;
 use std::sync::Mutex;
-use std::time::Instant;
 use swc_common::SourceMap;
 use swc_common::Span;
 use swc_ecma_visit::Visit;
@@ -35,7 +34,6 @@ impl Context {
     code: &str,
     message: &str,
   ) -> Diagnostic {
-    let start = Instant::now();
     let location = self.source_map.lookup_char_pos(span.lo());
     let line_src = self
       .source_map
@@ -50,17 +48,13 @@ impl Context {
       .expect("error loading snippet")
       .len();
 
-    let diagnostic = Diagnostic {
+    Diagnostic {
       location: location.into(),
       message: message.to_string(),
       code: code.to_string(),
       line_src,
       snippet_length,
-    };
-
-    let end = Instant::now();
-    debug!("Context::create_diagnostic took {:?}", end - start);
-    diagnostic
+    }
   }
 
   pub fn add_diagnostic(&self, span: Span, code: &str, message: &str) {
@@ -93,25 +87,12 @@ impl Analyzer {
     source_code: String,
     options: Option<AnalyzeOptions>,
   ) -> Result<Vec<Diagnostic>, SwcDiagnosticBuffer> {
-    let start = Instant::now();
-    let r = self.ast_parser.parse_module(
-      &file_name,
-      self.syntax,
-      &source_code,
-      |parse_result, _comments| {
-        let end_parse_module = Instant::now();
-        debug!(
-          "ast_parser.parse_module took {:#?}",
-          end_parse_module - start
-        );
-        let module = parse_result?;
-        let diagnostics = self.check_module(file_name.clone(), module, options);
-        Ok(diagnostics)
-      },
-    );
-    let end = Instant::now();
-    debug!("Analyzer::analyze took {:#?}", end - start);
-    r
+    let parse_result =
+      self
+        .ast_parser
+        .parse_module(&file_name, self.syntax, &source_code)?;
+    let diagnostics = self.check_module(file_name, parse_result, options);
+    Ok(diagnostics)
   }
 
   pub fn filter_diagnostics(&self, context: Arc<Context>) -> Vec<Diagnostic> {
@@ -125,7 +106,6 @@ impl Analyzer {
     module: swc_ecma_ast::Module,
     options: Option<AnalyzeOptions>,
   ) -> Vec<Diagnostic> {
-    let start = Instant::now();
     let mut scope_visitor = ScopeVisitor::default();
     let root_scope = scope_visitor.get_root_scope();
     scope_visitor.visit_module(&module, &module);
@@ -141,10 +121,6 @@ impl Analyzer {
       rule.check_module(context.clone(), &module, options.clone());
     }
 
-    let d = self.filter_diagnostics(context);
-    let end = Instant::now();
-    debug!("Analyzer::check_module took {:#?}", end - start);
-
-    d
+    self.filter_diagnostics(context)
   }
 }

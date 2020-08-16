@@ -77,15 +77,13 @@ pub fn analyze_dependencies(
   let mut ts_config = TsConfig::default();
   ts_config.dynamic_import = true;
   let syntax = Syntax::Typescript(ts_config);
-  parser.parse_module(filename, syntax, source_code, |parse_result, _| {
-    let module = parse_result?;
-    let mut collector = DependencyVisitor {
-      dependencies: vec![],
-      analyze_dynamic_imports,
-    };
-    collector.visit_module(&module, &module);
-    Ok(collector.dependencies)
-  })
+  let parse_result = parser.parse_module(filename, syntax, source_code)?;
+  let mut collector = DependencyVisitor {
+    dependencies: vec![],
+    analyze_dynamic_imports,
+  };
+  collector.visit_module(&parse_result, &parse_result);
+  Ok(collector.dependencies)
 }
 
 #[test]

@@ -1,0 +1,10 @@
+{
+    "name": "nest_analyzer",
+    "version": "1.0.0",
+    "main": "wasm.js",
+    "author": "Divy Srivastava",
+    "license": "MIT",
+    "private": false,
+    "type": "module"
+  }
+  
