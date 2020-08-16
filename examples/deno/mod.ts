@@ -1,4 +1,4 @@
-import { analyze } from "../../wasm/mod.ts";
+import { analyze } from "../../wasm/deno.ts";
 
 let diagnostics = analyze(`
 await Deno.run();

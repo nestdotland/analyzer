@@ -1,5 +1,4 @@
 import { encode } from "https://deno.land/std@0.61.0/encoding/base64.ts";
-import { compress } from "https://deno.land/x/lz4@v0.1.2/mod.ts";
 import Terser from "https://jspm.dev/terser@4.8.0";
 
 const name = "nest_analyzer_wasm";
@@ -54,20 +53,15 @@ await run(
 );
 
 const wasm = await Deno.readFile(`pkg/${name}_bg.wasm`);
-const compressed = compress(wasm);
-log(
-  `compressed wasm using lz4, size reduction: ${wasm.length -
-    compressed.length} bytes`,
-);
-const encoded = encode(compressed);
+const encoded = encode(wasm);
 log(
   `encoded wasm using base64, size increase: ${encoded.length -
-    compressed.length} bytes`,
+    wasm.length} bytes`,
 );
 
 log("inlining wasm in js");
-const source = `import * as lz4 from "https://deno.land/x/lz4@v0.1.2/mod.ts";
-                export const source = lz4.decompress(Uint8Array.from(atob("${encoded}"), c => c.charCodeAt(0)));`;
+const source =
+  `export const source = Uint8Array.from(atob("${encoded}"), c => c.charCodeAt(0));`;
 
 const init = await Deno.readTextFile(`pkg/${name}.js`);
 

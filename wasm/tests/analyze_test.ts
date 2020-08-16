@@ -1,4 +1,4 @@
-import { analyze } from "../mod.ts";
+import { analyze } from "../deno.ts";
 import { assertEquals } from "./deps.ts";
 
 Deno.test("tree #1 | basic import", () => {
