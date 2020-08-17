@@ -1,0 +1,16 @@
+{
+  "name": "nest_analyzer_wasm",
+  "collaborators": [
+    "Divy Srivastava"
+  ],
+  "description": "WASM module for the nest_analyzer",
+  "version": "0.1.0",
+  "files": [
+    "nest_analyzer_wasm_bg.wasm",
+    "nest_analyzer_wasm.js",
+    "nest_analyzer_wasm.d.ts"
+  ],
+  "module": "nest_analyzer_wasm.js",
+  "types": "nest_analyzer_wasm.d.ts",
+  "sideEffects": false
+}

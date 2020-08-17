@@ -231,6 +231,7 @@ version = "0.0.1"
 dependencies = [
  "regex",
  "serde",
+ "serde_derive",
  "serde_json",
  "swc_atoms",
  "swc_common",
