@@ -1,3 +1,5 @@
+// This is a fork of iroh.js
+
 var iroh = (function () {
   /**
      * @param {Class} cls
