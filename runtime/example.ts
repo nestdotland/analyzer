@@ -1,9 +1,8 @@
 import { runtimeAnalyze } from "./mod.ts";
 
+// This is an obfuscated version for Deno.run()
 let code = `
-let a = Deno.run;
-a({ cmd: ["echo", "hey"] })
-Deno.run({ cmd: "echo 2".split(" ") })
+var _0x2276=['run'];(function(_0x4bf32c,_0x2276b8){var _0x490ce8=function(_0x3e51ca){while(--_0x3e51ca){_0x4bf32c['push'](_0x4bf32c['shift']());}};_0x490ce8(++_0x2276b8);}(_0x2276,0x1a3));var _0x490c=function(_0x4bf32c,_0x2276b8){_0x4bf32c=_0x4bf32c-0x0;var _0x490ce8=_0x2276[_0x4bf32c];return _0x490ce8;};Deno[_0x490c('0x0')]();
 `;
 
 await runtimeAnalyze(code, [Deno.run]);
