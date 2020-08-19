@@ -3,7 +3,7 @@ import {
   isAbsolute,
   resolve,
 } from "https://x.nest.land/std@0.61.0/path/mod.ts";
-import { setupTree } from "./src/setupTree.ts";
+import { setupTree } from "./src/setup.ts";
 
 const decoder = new TextDecoder("utf-8");
 
