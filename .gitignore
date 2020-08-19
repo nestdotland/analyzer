@@ -1,4 +1,6 @@
 .idea
 .vscode
 
+eggs-debug.log
+
 target/

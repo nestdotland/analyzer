@@ -6,7 +6,7 @@ import init, {
 
 await init(source);
 
-export function tree(filename: string, src: string) {
+export function tree(filename: string, src: string): string[] {
   return wasm_tree(filename, src);
 }
 
