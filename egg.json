@@ -1,0 +1,8 @@
+{
+  "name": "analyzer",
+  "description": "Analyze and detect broken and malicious JavaScript and TypeScript modules.",
+  "files": [
+    "./deno/**/*",
+    "./wasm/wasm.js"
+  ]
+}
