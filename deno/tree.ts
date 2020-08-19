@@ -6,7 +6,7 @@ import init, {
 
 await init(source);
 
-export function extractDependencies(filename: string, src: string) {
+export function tree(filename: string, src: string) {
   return wasm_tree(filename, src);
 }
 

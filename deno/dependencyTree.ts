@@ -1,4 +1,4 @@
-import { extractDependencies } from "./analyze.ts"
+import { tree as extractDependencies } from "./tree.ts"
 
 /* Only used when a relative path is given */
 import { fromFileUrl, isAbsolute, resolve} from "https://x.nest.land/std@0.61.0/path/mod.ts";
