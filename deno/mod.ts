@@ -1,2 +1,2 @@
-export * from "./dependencyTree.ts"
-export * from "./analyze.ts"
+export * from "./dependencyTree.ts";
+export * from "./analyze.ts";
