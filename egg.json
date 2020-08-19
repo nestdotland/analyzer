@@ -1,0 +1,11 @@
+{
+  "name": "analyzer",
+  "description": "Analyze and detect broken and malicious JavaScript and TypeScript modules.",
+  "stable": true,
+  "version": "0.0.1",
+  "repository": "https://github.com/nestdotland/analyzer",
+  "files": [
+    "./ts/**/*",
+    "./wasm/wasm.js"
+  ]
+}
