@@ -2,7 +2,7 @@ import init, {
   source,
   tree as wasm_tree,
   analyze as wasm_analyze,
-} from "./wasm.js";
+} from "../wasm/wasm.js";
 
 await init(source);
 
