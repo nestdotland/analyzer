@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "repository": "https://github.com/nestdotland/analyzer",
   "files": [
-    "./deno/**/*",
+    "./ts/**/*",
     "./wasm/wasm.js"
   ]
 }
