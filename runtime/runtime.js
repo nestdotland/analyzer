@@ -1,10 +1,9 @@
 // This is a fork of iroh.js
-
 var iroh = (function () {
   /**
-     * @param {Class} cls
-     * @param {Array} prot
-     */
+ * @param {Class} cls
+ * @param {Array} prot
+ */
   var extend = function (cls, prot) {
     for (var key in prot) {
       if (prot[key] instanceof Function) {
@@ -1172,7 +1171,9 @@ var iroh = (function () {
       options[opt] = opts && has(opts, opt) ? opts[opt] : defaultOptions[opt];
     }
 
-    if (options.ecmaVersion >= 2015) options.ecmaVersion -= 2009;
+    if (options.ecmaVersion >= 2015) {
+      options.ecmaVersion -= 2009;
+    }
 
     if (options.allowReserved == null) {
       options.allowReserved = options.ecmaVersion < 5;
@@ -1202,7 +1203,9 @@ var iroh = (function () {
       if (options.locations) {
         comment.loc = new SourceLocation(this, startLoc, endLoc);
       }
-      if (options.ranges) comment.range = [start, end];
+      if (options.ranges) {
+        comment.range = [start, end];
+      }
       array.push(comment);
     };
   }
@@ -1221,9 +1224,7 @@ var iroh = (function () {
     var reserved = "";
     if (!options.allowReserved) {
       for (var v = options.ecmaVersion;; v--) {
-        if (reserved = reservedWords[v]) {
-          break;
-        }
+        if (reserved = reservedWords[v]) break;
       }
       if (options.sourceType == "module") reserved += " await";
     }
@@ -1409,7 +1410,9 @@ var iroh = (function () {
       if (this.options.onTrailingComma) {
         this.options.onTrailingComma(this.lastTokStart, this.lastTokStartLoc);
       }
-      if (!notNext) this.next();
+      if (!notNext) {
+        this.next();
+      }
       return true;
     }
   };
@@ -1621,7 +1624,7 @@ var iroh = (function () {
           ? this.parseImport(node)
           : this.parseExport(node, exports);
 
-      // If the statement does not start with a statement keyword or a
+        // If the statement does not start with a statement keyword or a
       // brace, it's an ExpressionStatement or LabeledStatement. We
       // simply start parsing an expression, and afterwards, if the
       // next token is a colon and the expression was a simple
@@ -1687,8 +1690,11 @@ var iroh = (function () {
     this.labels.pop();
     this.expect(types._while);
     node.test = this.parseParenExpression();
-    if (this.options.ecmaVersion >= 6) this.eat(types.semi);
-    else this.semicolon();
+    if (this.options.ecmaVersion >= 6) {
+      this.eat(types.semi);
+    } else {
+      this.semicolon();
+    }
     return this.finishNode(node, "DoWhileStatement");
   };
 
@@ -2046,7 +2052,9 @@ var iroh = (function () {
     if (this.options.ecmaVersion >= 6 && !isAsync) {
       node.generator = this.eat(types.star);
     }
-    if (this.options.ecmaVersion >= 8) node.async = !!isAsync;
+    if (this.options.ecmaVersion >= 8) {
+      node.async = !!isAsync;
+    }
 
     if (isStatement) {
       node.id = isStatement === "nullableID" && this.type != types.name
@@ -2305,8 +2313,9 @@ var iroh = (function () {
     var this$1 = this;
 
     var type = pat.type;
-    if (type == "Identifier") this.checkExport(exports, pat.name, pat.start);
-    else if (type == "ObjectPattern") {
+    if (type == "Identifier") {
+      this.checkExport(exports, pat.name, pat.start);
+    } else if (type == "ObjectPattern") {
       for (var i = 0, list = pat.properties; i < list.length; i += 1) {
         var prop = list[i];
 
@@ -2692,9 +2701,7 @@ var iroh = (function () {
 
       case "ArrayPattern":
         for (
-          var i$1 = 0, list$1 = expr.elements;
-          i$1 < list$1.length;
-          i$1 += 1
+          var i$1 = 0, list$1 = expr.elements; i$1 < list$1.length; i$1 += 1
         ) {
           var elem = list$1[i$1];
 
@@ -3034,7 +3041,9 @@ var iroh = (function () {
         "**",
         false,
       );
-    } else return expr;
+    } else {
+      return expr;
+    }
   };
 
   // Parse call, dot, and `[]`-subscript expressions.
@@ -3214,9 +3223,7 @@ var iroh = (function () {
           ) {
             refDestructuringErrors.parenthesizedAssign = start;
           }
-          if (
-            refDestructuringErrors.parenthesizedBind < 0
-          ) {
+          if (refDestructuringErrors.parenthesizedBind < 0) {
             refDestructuringErrors.parenthesizedBind = start;
           }
         }
@@ -3498,7 +3505,9 @@ var iroh = (function () {
           startPos = this$1.start;
           startLoc = this$1.startLoc;
         }
-        if (!isPattern) isGenerator = this$1.eat(types.star);
+        if (!isPattern) {
+          isGenerator = this$1.eat(types.star);
+        }
       }
       this$1.parsePropertyName(prop);
       if (
@@ -3623,7 +3632,9 @@ var iroh = (function () {
       node.generator = false;
       node.expression = false;
     }
-    if (this.options.ecmaVersion >= 8) node.async = false;
+    if (this.options.ecmaVersion >= 8) {
+      node.async = false;
+    }
   };
 
   // Parse object or class method.
@@ -3637,8 +3648,12 @@ var iroh = (function () {
       oldInFunc = this.inFunction;
 
     this.initFunction(node);
-    if (this.options.ecmaVersion >= 6) node.generator = isGenerator;
-    if (this.options.ecmaVersion >= 8) node.async = !!isAsync;
+    if (this.options.ecmaVersion >= 6) {
+      node.generator = isGenerator;
+    }
+    if (this.options.ecmaVersion >= 8) {
+      node.async = !!isAsync;
+    }
 
     this.inGenerator = node.generator;
     this.inAsync = node.async;
@@ -3675,7 +3690,9 @@ var iroh = (function () {
 
     this.enterFunctionScope();
     this.initFunction(node);
-    if (this.options.ecmaVersion >= 8) node.async = !!isAsync;
+    if (this.options.ecmaVersion >= 8) {
+      node.async = !!isAsync;
+    }
 
     this.inGenerator = false;
     this.inAsync = node.async;
@@ -3749,9 +3766,7 @@ var iroh = (function () {
     for (var i = 0, list = params; i < list.length; i += 1) {
       var param = list[i];
 
-      if (param.type !== "Identifier") {
-        return false;
-      }
+      if (param.type !== "Identifier") return false;
     }
     return true;
   };
@@ -3792,8 +3807,9 @@ var iroh = (function () {
       } else first = false;
 
       var elt = (void 0);
-      if (allowEmpty && this$1.type === types.comma) elt = null;
-      else if (this$1.type === types.ellipsis) {
+      if (allowEmpty && this$1.type === types.comma) {
+        elt = null;
+      } else if (this$1.type === types.ellipsis) {
         elt = this$1.parseSpread(refDestructuringErrors);
         if (
           refDestructuringErrors && this$1.type === types.comma &&
@@ -3973,9 +3989,9 @@ var iroh = (function () {
   };
 
   /**
-     * A name can be declared with `var` if there are no variables with the same name declared with `let`/`const`
-     * in the current lexical scope or any of the parent lexical scopes in this function.
-     */
+ * A name can be declared with `var` if there are no variables with the same name declared with `let`/`const`
+ * in the current lexical scope or any of the parent lexical scopes in this function.
+ */
   pp$5.canDeclareVarName = function (name) {
     var currentScope = this.scopeStack[this.scopeStack.length - 1];
 
@@ -3984,10 +4000,10 @@ var iroh = (function () {
   };
 
   /**
-     * A name can be declared with `let`/`const` if there are no variables with the same name declared with `let`/`const`
-     * in the current scope, and there are no variables with the same name declared with `var` in the current scope or in
-     * any child lexical scopes in this function.
-     */
+ * A name can be declared with `let`/`const` if there are no variables with the same name declared with `let`/`const`
+ * in the current scope, and there are no variables with the same name declared with `var` in the current scope or in
+ * any child lexical scopes in this function.
+ */
   pp$5.canDeclareLexicalName = function (name) {
     var currentScope = this.scopeStack[this.scopeStack.length - 1];
 
@@ -4007,11 +4023,15 @@ var iroh = (function () {
     this.type = "";
     this.start = pos;
     this.end = 0;
-    if (parser.options.locations) this.loc = new SourceLocation(parser, loc);
+    if (parser.options.locations) {
+      this.loc = new SourceLocation(parser, loc);
+    }
     if (parser.options.directSourceFile) {
       this.sourceFile = parser.options.directSourceFile;
     }
-    if (parser.options.ranges) this.range = [pos, 0];
+    if (parser.options.ranges) {
+      this.range = [pos, 0];
+    }
   };
 
   // Start an AST node, attaching a start offset.
@@ -4031,8 +4051,12 @@ var iroh = (function () {
   function finishNodeAt(node, type, pos, loc) {
     node.type = type;
     node.end = pos;
-    if (this.options.locations) node.loc.end = loc;
-    if (this.options.ranges) node.range[1] = pos;
+    if (this.options.locations) {
+      node.loc.end = loc;
+    }
+    if (this.options.ranges) {
+      node.range[1] = pos;
+    }
     return node;
   }
 
@@ -4093,7 +4117,9 @@ var iroh = (function () {
 
   pp$7.braceIsBlock = function (prevType) {
     var parent = this.curContext();
-    if (parent === types$1.f_expr || parent === types$1.f_stat) return true;
+    if (parent === types$1.f_expr || parent === types$1.f_stat) {
+      return true;
+    }
     if (
       prevType === types.colon &&
       (parent === types$1.b_stat || parent === types$1.b_expr)
@@ -4116,8 +4142,12 @@ var iroh = (function () {
     ) {
       return true;
     }
-    if (prevType == types.braceL) return parent === types$1.b_stat;
-    if (prevType == types._var || prevType == types.name) return false;
+    if (prevType == types.braceL) {
+      return parent === types$1.b_stat;
+    }
+    if (prevType == types._var || prevType == types.name) {
+      return false;
+    }
     return !this.exprAllowed;
   };
 
@@ -4126,16 +4156,22 @@ var iroh = (function () {
 
     for (var i = this.context.length - 1; i >= 1; i--) {
       var context = this$1.context[i];
-      if (context.token === "function") return context.generator;
+      if (context.token === "function") {
+        return context.generator;
+      }
     }
     return false;
   };
 
   pp$7.updateContext = function (prevType) {
     var update, type = this.type;
-    if (type.keyword && prevType == types.dot) this.exprAllowed = false;
-    else if (update = type.updateContext) update.call(this, prevType);
-    else this.exprAllowed = type.beforeExpr;
+    if (type.keyword && prevType == types.dot) {
+      this.exprAllowed = false;
+    } else if (update = type.updateContext) {
+      update.call(this, prevType);
+    } else {
+      this.exprAllowed = type.beforeExpr;
+    }
   };
 
   // Token-specific context update code
@@ -4185,13 +4221,18 @@ var iroh = (function () {
         this.curContext() === types$1.b_stat)
     ) {
       this.context.push(types$1.f_expr);
-    } else this.context.push(types$1.f_stat);
+    } else {
+      this.context.push(types$1.f_stat);
+    }
     this.exprAllowed = false;
   };
 
   types.backQuote.updateContext = function () {
-    if (this.curContext() === types$1.q_tmpl) this.context.pop();
-    else this.context.push(types$1.q_tmpl);
+    if (this.curContext() === types$1.q_tmpl) {
+      this.context.pop();
+    } else {
+      this.context.push(types$1.q_tmpl);
+    }
     this.exprAllowed = false;
   };
 
@@ -4200,7 +4241,9 @@ var iroh = (function () {
       var index = this.context.length - 1;
       if (this.context[index] === types$1.f_expr) {
         this.context[index] = types$1.f_expr_gen;
-      } else this.context[index] = types$1.f_gen;
+      } else {
+        this.context[index] = types$1.f_gen;
+      }
     }
     this.exprAllowed = true;
   };
@@ -4230,7 +4273,9 @@ var iroh = (function () {
     if (p.options.locations) {
       this.loc = new SourceLocation(p, p.startLoc, p.endLoc);
     }
-    if (p.options.ranges) this.range = [p.start, p.end];
+    if (p.options.ranges) {
+      this.range = [p.start, p.end];
+    }
   };
 
   // ## Tokenizer
@@ -4244,7 +4289,9 @@ var iroh = (function () {
   // Move to the next token
 
   pp$8.next = function () {
-    if (this.options.onToken) this.options.onToken(new Token(this));
+    if (this.options.onToken) {
+      this.options.onToken(new Token(this));
+    }
 
     this.lastTokEnd = this.end;
     this.lastTokStart = this.start;
@@ -4563,7 +4610,7 @@ var iroh = (function () {
       case 46: // '.'
         return this.readToken_dot();
 
-      // Punctuation tokens.
+        // Punctuation tokens.
 
       case 40:
         ++this.pos;
@@ -4608,7 +4655,7 @@ var iroh = (function () {
           if (next === 111 || next === 79) return this.readRadixNumber(8); // '0o', '0O' - octal number
           if (next === 98 || next === 66) return this.readRadixNumber(2); // '0b', '0B' - binary number
         }
-      // Anything else beginning with a digit is an integer, octal
+        // Anything else beginning with a digit is an integer, octal
       // number, or float.
       case 49:
       case 50:
@@ -5316,8 +5363,8 @@ var iroh = (function () {
 
       function reindent(state, text, indent, lineEnd) {
         /*
-                Writes into `state` the `text` string reindented with the provided `indent`.
-                */
+    Writes into `state` the `text` string reindented with the provided `indent`.
+    */
         var trimmedText = text.trim();
         if (trimmedText === "") {
           return;
@@ -5350,8 +5397,8 @@ var iroh = (function () {
 
       function hasCallExpression(node) {
         /*
-                Returns `true` if the provided `node` contains a call expression and `false` otherwise.
-                */
+    Returns `true` if the provided `node` contains a call expression and `false` otherwise.
+    */
         var currentNode = node;
         while (currentNode != null) {
           var _currentNode = currentNode,
@@ -5667,8 +5714,9 @@ var iroh = (function () {
           state.write(
             (node.async ? "async " : "") + (node.generator
               ? "function* "
-              : "function ") +
-              (node.id ? node.id.name : ""),
+              : "function ") + (node.id
+                ? node.id.name
+                : ""),
             node,
           );
           formatSequence(state, node.params);
@@ -6300,15 +6348,15 @@ var iroh = (function () {
 
       function generate(node, options) {
         /*
-                Returns a string representing the rendered code of the provided AST `node`.
-                The `options` are:
-                 - `indent`: string to use for indentation (defaults to `\t`)
-                - `lineEnd`: string to use for line endings (defaults to `\n`)
-                - `startingIndentLevel`: indent level to start from (default to `0`)
-                - `comments`: generate comments if `true` (defaults to `false`)
-                - `output`: output stream to write the rendered code to (defaults to `null`)
-                - `generator`: custom code generator (defaults to `baseGenerator`)
-                */
+    Returns a string representing the rendered code of the provided AST `node`.
+    The `options` are:
+     - `indent`: string to use for indentation (defaults to `\t`)
+    - `lineEnd`: string to use for line endings (defaults to `\n`)
+    - `startingIndentLevel`: indent level to start from (default to `0`)
+    - `comments`: generate comments if `true` (defaults to `false`)
+    - `output`: output stream to write the rendered code to (defaults to `null`)
+    - `generator`: custom code generator (defaults to `baseGenerator`)
+    */
         var state = new State(options);
         // Travel through the AST node and generate the code
         state.generator[node.type](node, state);
@@ -6382,9 +6430,7 @@ var iroh = (function () {
         // state.
 
         function simple(node, visitors, base, state, override) {
-          if (!base) {
-            base = exports.base;
-          }
+          if (!base) base = exports.base;
           (function c(node, st, override) {
             var type = override || node.type, found = visitors[type];
             base[type](node, st, c);
@@ -6429,7 +6475,9 @@ var iroh = (function () {
             return function () {
               return true;
             };
-          } else return test;
+          } else {
+            return test;
+          }
         }
 
         var Found = function Found(node, state) {
@@ -6439,9 +6487,7 @@ var iroh = (function () {
 
         // A full walk triggers the callback on each node
         function full(node, callback, base, state, override) {
-          if (!base) {
-            base = exports.base;
-          }
+          if (!base) base = exports.base;
           (function c(node, st, override) {
             var type = override || node.type;
             base[type](node, st, c);
@@ -6610,9 +6656,7 @@ var iroh = (function () {
 
             if (cs.test) c(cs.test, st, "Expression");
             for (
-              var i$1 = 0, list$1 = cs.consequent;
-              i$1 < list$1.length;
-              i$1 += 1
+              var i$1 = 0, list$1 = cs.consequent; i$1 < list$1.length; i$1 += 1
             ) {
               var cons = list$1[i$1];
 
@@ -6691,10 +6735,13 @@ var iroh = (function () {
         };
 
         base.Pattern = function (node, st, c) {
-          if (node.type == "Identifier") c(node, st, "VariablePattern");
-          else if (node.type == "MemberExpression") {
+          if (node.type == "Identifier") {
+            c(node, st, "VariablePattern");
+          } else if (node.type == "MemberExpression") {
             c(node, st, "MemberPattern");
-          } else c(node, st);
+          } else {
+            c(node, st);
+          }
         };
         base.VariablePattern = ignore;
         base.MemberPattern = skipThrough;
@@ -9104,37 +9151,37 @@ var iroh = (function () {
   };
 
   /*
-    STAGE8.Literal = function(node) {
-      if (node.magic) return;
-      let clone = Iroh.cloneNode(node);
-      node.magic = true;
-      node.type = "CallExpression";
-      node.callee = {
-        magic: true,
-        type: "Identifier",
-        name: Iroh.getLink("DEBUG_LITERAL")
-      };
-      node.arguments = [
-        clone
-      ];
-    };
-    
-    STAGE8.Identifier = function(node) {
-      if (node.magic) return;
-      node.magic = true;
-      let clone = Iroh.cloneNode(node);
-      node.type = "CallExpression";
-      node.callee = {
-        magic: true,
-        type: "Identifier",
-        name: Iroh.getLink("DEBUG_IDENTIFIER")
-      };
-      node.arguments = [
-        Iroh.parseExpression(`"${node.name}"`),
-        clone
-      ];
-    };
-    */
+STAGE8.Literal = function(node) {
+  if (node.magic) return;
+  let clone = Iroh.cloneNode(node);
+  node.magic = true;
+  node.type = "CallExpression";
+  node.callee = {
+    magic: true,
+    type: "Identifier",
+    name: Iroh.getLink("DEBUG_LITERAL")
+  };
+  node.arguments = [
+    clone
+  ];
+};
+
+STAGE8.Identifier = function(node) {
+  if (node.magic) return;
+  node.magic = true;
+  let clone = Iroh.cloneNode(node);
+  node.type = "CallExpression";
+  node.callee = {
+    magic: true,
+    type: "Identifier",
+    name: Iroh.getLink("DEBUG_IDENTIFIER")
+  };
+  node.arguments = [
+    Iroh.parseExpression(`"${node.name}"`),
+    clone
+  ];
+};
+  */
 
   STAGE8.Program = STAGE1.Program;
   STAGE8.BlockStatement = STAGE1.BlockStatement;
@@ -10147,14 +10194,14 @@ var iroh = (function () {
 
   // deprecated
   /*
-    export function DEBUG_LITERAL = function(value) {
-      console.log("Literal:", value);
-      return value;
-    };
-    export function DEBUG_IDENTIFIER = function(id, value) {
-      console.log("Identifier:", id, value);
-      return value;
-    };*/
+export function DEBUG_LITERAL = function(value) {
+  console.log("Literal:", value);
+  return value;
+};
+export function DEBUG_IDENTIFIER = function(id, value) {
+  console.log("Identifier:", id, value);
+  return value;
+};*/
 
   function DEBUG_PROGRAM_ENTER(hash) {
     //console.log(indentString(this.indent) + "Program");
