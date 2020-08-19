@@ -1,4 +1,6 @@
 import Iroh from "./runtime.js";
+import babelCore from "https://dev.jspm.io/@babel/core";
+import babelPresetEnv from "https://dev.jspm.io/@babel/preset-env";
 
 export async function runtimeAnalyze(
   code: string,
@@ -25,4 +27,18 @@ export async function runtimeAnalyze(
     // ;) Don't worry mate, it is safe
     eval(stage.script);
   });
+}
+
+export class Analyze {
+  public sig: Function;
+  constructor(sig: Function) {
+    this.sig = sig;
+  }
+  async analyze(code: string) {
+    const config = {
+      presets: [[babelPresetEnv, { targets: "> 0.25%, not dead" }]],
+    };
+    let out = babelCore.transform(code, config);
+    return await runtimeAnalyze(out.code, [this.sig]);
+  }
 }

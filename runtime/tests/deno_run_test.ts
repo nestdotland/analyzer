@@ -1,10 +1,9 @@
 // File: deno_run_test.ts
 
-import { Test } from "./deps.ts";
-import { FuncTest } from "./utils.ts";
+import { Analyze, Test } from "./deps.ts";
 
 let fnSig = Deno.run;
-let analyzer = new FuncTest(fnSig);
+let analyzer = new Analyze(fnSig);
 let testCases = [
   { code: "Deno.run()", name: "Deno.run()" },
   { code: "Deno['run']()", name: "Deno['run']()" },
@@ -15,12 +14,14 @@ let testCases = [
   },
   { code: `[Deno][0].run(); [Deno][0]["run"]();`, name: "Arrayified call" },
   { code: `const {run} = Deno; run()`, name: "Destructured call" },
-  // TODO(@divy-work): Fix! Acorn is not parsing spread operator.
-  // { code: `const x = {...Deno}; x.run(); x["run"]();`, name:"Namespace spread call" }
   {
     code:
       `let x = Deno; Object.keys(x).forEach(function(k,i) { {if(i===5){x[k]();}} })`,
     name: "Key index call",
+  },
+  {
+    code: `let x = Deno; Object.keys(x).forEach((k,i) => {if(i===5){x[k]();}})`,
+    name: "Key index call (arrow function)",
   },
   {
     code:
