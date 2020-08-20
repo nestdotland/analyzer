@@ -12,8 +12,14 @@ let testCases = [
     code: `function d() { return Deno; } d().openPlugin();`,
     name: "Wrapped inside a function",
   },
-  { code: `[Deno][0].openPlugin(); [Deno][0]["openPlugin"]();`, name: "Arrayified call" },
-  { code: `const {openPlugin} = Deno; openPlugin()`, name: "Destructured call" },
+  {
+    code: `[Deno][0].openPlugin(); [Deno][0]["openPlugin"]();`,
+    name: "Arrayified call",
+  },
+  {
+    code: `const {openPlugin} = Deno; openPlugin()`,
+    name: "Destructured call",
+  },
 ];
 
 Test.testPlan("deno_plugin_test.ts", () => {

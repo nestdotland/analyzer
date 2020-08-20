@@ -36,13 +36,12 @@ export class Analyze {
     this.sig = sig;
   }
   async analyze(code: string) {
-    
     const config = {
       presets: [[babelPresetEnv, { targets: "> 0.25%, not dead" }]],
-      plugins: [babelPluginTopAwait]
+      plugins: [babelPluginTopAwait],
     };
     let out = babelCore.transform(code, config);
-    
+
     return await runtimeAnalyze(out.code, [this.sig]);
   }
 }

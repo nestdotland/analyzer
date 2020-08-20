@@ -1,3 +1,2 @@
-export {
-  assertEquals,
-} from "https://deno.land/std@0.65.0/testing/asserts.ts";
+export { Rhum as Test } from "https://deno.land/x/rhum@v1.1.2/mod.ts";
+export { analyze as Analyze, tree as Tree } from "../../deno/mod.ts";

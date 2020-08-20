@@ -18,11 +18,20 @@ export function tree(filename: string, src: string) {
   return wasm_tree(filename, src);
 }
 
-export async function analyze(src: string): Promise<Diagnostics> {
+interface AnalyzerOptions {
+  runtime?: boolean;
+}
+
+export async function analyze(
+  src: string,
+  options?: AnalyzerOptions,
+): Promise<Diagnostics> {
   let runtimeDiagnostics = [];
-  for (let i = 0; i < FnRules.length; i++) {
-    let anl = new runtime(FnRules[i]);
-    runtimeDiagnostics.push(await anl.analyze(src));
+  if (options?.runtime) {
+    for (let i = 0; i < FnRules.length; i++) {
+      let anl = new runtime(FnRules[i]);
+      runtimeDiagnostics.push(await anl.analyze(src));
+    }
   }
   let diagnostics: Diagnostics = {
     static: wasm_analyze(src),
