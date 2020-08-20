@@ -1,4 +1,4 @@
-import { setupTree } from "./src/setupTree.ts";
+import { setupTree } from "./src/setup.ts";
 
 /** Build a dependency tree from a remote HTTP URL.
  * Analyses simultaneously the constructed tree. */

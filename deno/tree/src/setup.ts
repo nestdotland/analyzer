@@ -1,4 +1,4 @@
-import { tree as extractDependencies } from "../../tree.ts";
+import { tree as extractDependencies } from "../../wasm.ts";
 
 export type DependencyTree = Array<{
   path: string;
