@@ -2,6 +2,7 @@ import Iroh from "./runtime.js";
 import babelCore from "https://dev.jspm.io/@babel/core";
 import babelPresetEnv from "https://dev.jspm.io/@babel/preset-env";
 import babelPluginTopAwait from "https://dev.jspm.io/@babel/plugin-syntax-top-level-await";
+
 export async function runtimeAnalyze(
   code: string,
   rules: Function[],
@@ -35,14 +36,13 @@ export class Analyze {
     this.sig = sig;
   }
   async analyze(code: string) {
-    /**
-    TODO: implement babel
+    
     const config = {
       presets: [[babelPresetEnv, { targets: "> 0.25%, not dead" }]],
       plugins: [babelPluginTopAwait]
     };
     let out = babelCore.transform(code, config);
-    **/
-    return await runtimeAnalyze(code, [this.sig]);
+    
+    return await runtimeAnalyze(out.code, [this.sig]);
   }
 }
