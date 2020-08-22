@@ -1,9 +1,8 @@
-import { analyze } from "../../wasm/deno.ts";
+import { analyze } from "../../deno/mod.ts";
 
-let diagnostics = analyze(`
-await Deno.run();
+let diagnostics = await analyze(`
+Deno.run({ cmd: "echo 2".split(" ")});
 console.log("Something else");
-await Deno.openPlugin();
 `);
 
 console.log("===Diagnostics===");

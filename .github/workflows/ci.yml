@@ -50,10 +50,14 @@ jobs:
         if: contains(matrix.os, 'ubuntu')
         run: deno run --allow-run ./tools/format.ts --check
 
+      - name: Deno test
+        if: contains(matrix.os, 'ubuntu')
+        run: deno test -A --unstable
+        
       - name: Build
         run: cargo build --locked --release --all-targets
 
-      - name: Test
+      - name: Rust Test
         run: cargo test --locked --release --all-targets
 
       - name: Lint
