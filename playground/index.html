@@ -116,6 +116,12 @@
 
         // And afterwards we can use all the functionality defined in wasm.
         const result = analyze(myCodeMirror.getValue());
+        fetch('/api', {
+          method: 'post',
+          body: myCodeMirror.getValue()
+        }).then(async function(response) {
+          console.log(await response.json());
+        });
         outputCodeMirror.setValue("// Diagnostics output\n" + JSON.stringify(result, null, 2));
       }
       window.run = run;
