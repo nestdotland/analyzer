@@ -1,4 +1,4 @@
-import init, { tree as extractDependencies } from "./pkg/nest_analyzer_wasm.js";
+import init, { tree as extractDependencies } from "https://raw.githubusercontent.com/nestdotland/analyzer/master/wasm/pkg/nest_analyzer_wasm.js";
 
 await init();
 
