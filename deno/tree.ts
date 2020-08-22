@@ -3,7 +3,7 @@ import {
   isAbsolute,
   resolve,
 } from "https://x.nest.land/std@0.61.0/path/mod.ts";
-import { tree as extractDependencies } from "./tree.ts"
+import { tree as extractDependencies } from "./wasm.ts";
 
 const decoder = new TextDecoder("utf-8");
 
@@ -104,9 +104,8 @@ export async function dependencyTree(
     imports: await createTree(url),
   }];
   return { tree, circular, count, iterator: markedDependencies.keys() };
-};
+}/* Converts a path string to a file URL. */
 
-/* Converts a path string to a file URL. */
 export function fileURL(path: string, url = "") {
   if (url.match(/^file:\/\/\//) && (!isAbsolute(path))) {
     return new URL(path, url).href;

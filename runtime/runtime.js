@@ -2022,13 +2022,12 @@ var iroh = (function () {
 
   pp$1.parseForStatement = function (node) {
     this.next();
-    var awaitAt =
-      (this.options.ecmaVersion >= 9 &&
-          (this.inAsync ||
-            (!this.inFunction && this.options.allowAwaitOutsideFunction)) &&
-          this.eatContextual("await"))
-        ? this.lastTokStart
-        : -1;
+    var awaitAt = (this.options.ecmaVersion >= 9 &&
+        (this.inAsync ||
+          (!this.inFunction && this.options.allowAwaitOutsideFunction)) &&
+        this.eatContextual("await"))
+      ? this.lastTokStart
+      : -1;
     this.labels.push(loopLabel);
     this.enterScope(0);
     this.expect(types.parenL);
@@ -3219,7 +3218,9 @@ var iroh = (function () {
 
       case "ArrayPattern":
         for (
-          var i$1 = 0, list$1 = expr.elements; i$1 < list$1.length; i$1 += 1
+          var i$1 = 0, list$1 = expr.elements;
+          i$1 < list$1.length;
+          i$1 += 1
         ) {
           var elem = list$1[i$1];
 
@@ -4440,9 +4441,8 @@ var iroh = (function () {
     this.awaitPos = 0;
     this.awaitIdentPos = 0;
     this.enterScope(
-      functionFlags(isAsync, node.generator) | SCOPE_SUPER | (allowDirectSuper
-        ? SCOPE_DIRECT_SUPER
-        : 0),
+      functionFlags(isAsync, node.generator) | SCOPE_SUPER |
+        (allowDirectSuper ? SCOPE_DIRECT_SUPER : 0),
     );
 
     this.expect(types.parenL);
@@ -8593,7 +8593,9 @@ var iroh = (function () {
     }
 
     for (
-      var i$1 = 0, list$1 = node.expressions; i$1 < list$1.length; i$1 += 1
+      var i$1 = 0, list$1 = node.expressions;
+      i$1 < list$1.length;
+      i$1 += 1
     ) {
       var expr = list$1[i$1];
 

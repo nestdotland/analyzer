@@ -14,7 +14,7 @@ await init();
     iterator: IterableIterator<string>;
   }>}
  */
-export async function dependencyTree (path, options = { fullTree: false }) {
+export async function dependencyTree(path, options = { fullTree: false }) {
   const markedDependencies = new Map();
 
   const { fullTree } = options;
@@ -22,7 +22,7 @@ export async function dependencyTree (path, options = { fullTree: false }) {
   let circular = false;
   let count = 0;
 
-  async function createTree (url, parents = []) {
+  async function createTree(url, parents = []) {
     if (url.match(/^\[(Circular|Error|Redundant)/)) {
       return [{
         path: url,
@@ -87,9 +87,8 @@ export async function dependencyTree (path, options = { fullTree: false }) {
     imports: await createTree(url),
   }];
   return { tree, circular, count, iterator: markedDependencies.keys() };
-};
+}/* Resolves any path, relative or HTTP url. */
 
-/* Resolves any path, relative or HTTP url. */
 export function resolveURL(path, base = "") {
   if (path.match(/^https?:\/\//)) {
     return path;
@@ -102,4 +101,3 @@ async function fetchData(url) {
   const data = await fetch(url);
   return data.text();
 }
-
