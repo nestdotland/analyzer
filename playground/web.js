@@ -1,4 +1,6 @@
-import init, { tree as extractDependencies } from "https://raw.githubusercontent.com/nestdotland/analyzer/master/wasm/pkg/nest_analyzer_wasm.js";
+import init, {
+  tree as extractDependencies,
+} from "https://raw.githubusercontent.com/nestdotland/analyzer/master/wasm/pkg/nest_analyzer_wasm.js";
 
 await init();
 
@@ -87,7 +89,7 @@ export async function dependencyTree(path, options = { fullTree: false }) {
     imports: await createTree(url),
   }];
   return { tree, circular, count, iterator: markedDependencies.keys() };
-}/* Resolves any path, relative or HTTP url. */
+} /* Resolves any path, relative or HTTP url. */
 
 export function resolveURL(path, base = "") {
   if (path.match(/^https?:\/\//)) {

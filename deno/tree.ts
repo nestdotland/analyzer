@@ -104,7 +104,7 @@ export async function dependencyTree(
     imports: await createTree(url),
   }];
   return { tree, circular, count, iterator: markedDependencies.keys() };
-}/* Converts a path string to a file URL. */
+} /* Converts a path string to a file URL. */
 
 export function fileURL(path: string, url = "") {
   if (url.match(/^file:\/\/\//) && (!isAbsolute(path))) {
