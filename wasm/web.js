@@ -10,6 +10,7 @@ await init();
  * @returns {Promise<{
     tree: DependencyTree;
     circular: boolean;
+    errors: any[];
     count: number;
     iterator: IterableIterator<string>;
   }>}
@@ -19,6 +20,7 @@ export async function dependencyTree(path, options = { fullTree: false }) {
 
   const { fullTree } = options;
 
+  const errors = []
   let circular = false;
   let count = 0;
 
@@ -68,6 +70,7 @@ export async function dependencyTree(path, options = { fullTree: false }) {
           imports: subTree.value,
         });
       } else {
+        errors.push(subTree.reason)
         depTree.push({
           path: dependencies[i],
           imports: [{
@@ -86,9 +89,10 @@ export async function dependencyTree(path, options = { fullTree: false }) {
     path: url,
     imports: await createTree(url),
   }];
-  return { tree, circular, count, iterator: markedDependencies.keys() };
-}/* Resolves any path, relative or HTTP url. */
+  return { tree, circular, count, iterator: markedDependencies.keys(), errors };
+}
 
+/* Resolves any path, relative or HTTP url. */
 export function resolveURL(path, base = "") {
   if (path.match(/^https?:\/\//)) {
     return path;
