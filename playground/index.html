@@ -120,9 +120,10 @@
           method: 'post',
           body: myCodeMirror.getValue()
         }).then(async function(response) {
-          console.log(await response.json());
+          console.log(await response.clone().text())
+          const diagnostics = await response.json();
+          outputCodeMirror.setValue("// Diagnostics output\n" + JSON.stringify(diagnostics, null, 2));
         });
-        outputCodeMirror.setValue("// Diagnostics output\n" + JSON.stringify(result, null, 2));
       }
       window.run = run;
     </script>
