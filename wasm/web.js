@@ -10,7 +10,7 @@ await init();
  * @returns {Promise<{
     tree: DependencyTree;
     circular: boolean;
-    errors: any[];
+    errors: [string, any][];
     count: number;
     iterator: IterableIterator<string>;
   }>}
@@ -70,7 +70,7 @@ export async function dependencyTree(path, options = { fullTree: false }) {
           imports: subTree.value,
         });
       } else {
-        errors.push(subTree.reason)
+        errors.push([dependencies[i], subTree.reason])
         depTree.push({
           path: dependencies[i],
           imports: [{
