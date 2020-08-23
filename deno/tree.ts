@@ -15,7 +15,7 @@ export type DependencyTree = Array<{
 export interface IDependencyTree {
   tree: DependencyTree;
   circular: boolean;
-  errors: any[]
+  errors: Array<[string, any]>;
   count: number;
   iterator: IterableIterator<string>;
 }
@@ -34,7 +34,7 @@ export async function dependencyTree(
 
   const { fullTree } = options;
 
-  const errors: any[] = []
+  const errors: Array<[string, any]> = [];
   let circular = false;
   let count = 0;
 
@@ -87,7 +87,7 @@ export async function dependencyTree(
           imports: subTree.value,
         });
       } else {
-        errors.push(subTree.reason)
+        errors.push([dependencies[i], subTree.reason]);
         depTree.push({
           path: dependencies[i],
           imports: [{
