@@ -52,6 +52,9 @@ export class Analyze {
         {
           "/runtime.ts": code,
         },
+        {
+          module: "es2015"
+        }
       );
       typescriptDiagnostics = diagnostics;
       js = emit;
