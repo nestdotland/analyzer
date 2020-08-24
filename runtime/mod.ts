@@ -32,7 +32,7 @@ export async function runtimeAnalyze(
 
 export interface RuntimeDiagnostics {
   typescriptDiagnostics?: Deno.DiagnosticItem;
-  runtimeDiagnostics: any;
+  runtimeDiagnostics?: any;
 }
 
 export class Analyze {
@@ -59,6 +59,6 @@ export class Analyze {
     };
     let out = babelCore.transform(js, config);
     const runtimeDiagnostics = await runtimeAnalyze(out.code, this.sig);
-    return { typescriptDiagnostics, runtimeDiagnostics };
+    return { typescriptDiagnostics, runtimeDiagnostics } as RuntimeDiagnostics;
   }
 }
