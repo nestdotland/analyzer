@@ -30,18 +30,35 @@ export async function runtimeAnalyze(
   });
 }
 
+export interface RuntimeDiagnostics {
+  typescriptDiagnostics?: Deno.DiagnosticItem;
+  runtimeDiagnostics?: any;
+}
+
 export class Analyze {
-  public sig: Function;
-  constructor(sig: Function) {
+  public sig: Function[];
+  constructor(sig: Function[]) {
     this.sig = sig;
   }
-  async analyze(code: string) {
+  async analyze(code: string, typescript?: boolean) {
+    let js: string = code;
+    let typescriptDiagnostics = null;
+    if (typescript) {
+      const [diagnostics, emit] = await Deno.bundle(
+        "/runtime.ts",
+        {
+          "/runtime.ts": code,
+        },
+      );
+      typescriptDiagnostics = diagnostics;
+      js = emit;
+    }
     const config = {
       presets: [[babelPresetEnv, { targets: "> 0.25%, not dead" }]],
       plugins: [babelPluginTopAwait],
     };
-    let out = babelCore.transform(code, config);
-
-    return await runtimeAnalyze(out.code, [this.sig]);
+    let out = babelCore.transform(js, config);
+    const runtimeDiagnostics = await runtimeAnalyze(out.code, this.sig);
+    return { typescriptDiagnostics, runtimeDiagnostics } as RuntimeDiagnostics;
   }
 }

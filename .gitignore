@@ -4,3 +4,5 @@
 eggs-debug.log
 
 target/
+
+.vercel
