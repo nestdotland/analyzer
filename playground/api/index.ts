@@ -6,7 +6,7 @@ import {
 import {
   analyze,
   Diagnostics,
-} from "https://raw.github.com/nestdotland/analyzer/master/deno/mod.ts?x=1";
+} from "https://raw.github.com/nestdotland/analyzer/master/mod.ts";
 
 export async function handler(
   event: APIGatewayProxyEvent,

@@ -1,4 +1,4 @@
-import { analyze } from "../../deno/mod.ts";
+import { analyze } from "../../mod.ts";
 
 let diagnostics = await analyze(
   `
