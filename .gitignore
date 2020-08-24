@@ -6,3 +6,4 @@ eggs-debug.log
 target/
 
 .vercel
+.now

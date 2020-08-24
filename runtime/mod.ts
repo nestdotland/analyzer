@@ -7,8 +7,11 @@ export async function runtimeAnalyze(
   code: string,
   rules: Function[],
 ): Promise<any> {
+  // @ts-ignore
   let stage = new Iroh.Stage(code);
+  // @ts-ignore
   let listener = stage.addListener(Iroh.CALL);
+  // @ts-ignore
   let program = stage.addListener(Iroh.PROGRAM);
   let diagnostics: any[] = [];
   return new Promise((res, rej) => {
@@ -57,6 +60,7 @@ export class Analyze {
       presets: [[babelPresetEnv, { targets: "> 0.25%, not dead" }]],
       plugins: [babelPluginTopAwait],
     };
+    // @ts-ignore
     let out = babelCore.transform(js, config);
     const runtimeDiagnostics = await runtimeAnalyze(out.code, this.sig);
     return { typescriptDiagnostics, runtimeDiagnostics } as RuntimeDiagnostics;
