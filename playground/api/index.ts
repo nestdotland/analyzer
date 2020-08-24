@@ -9,8 +9,9 @@ export default async (req: ServerRequest) => {
   const src: string = new TextDecoder().decode(buf);
   try {
     let diagnostics: Diagnostics = await analyze(src, {
-      runtime: true, // TODO(@divy-work): set this to false unless we are sure that evaluation is safe.
-    });
+      runtime: true,
+    } // TODO(@divy-work): set this to false unless we are sure that evaluation is safe.
+    );
     await req.respond({ body: JSON.stringify(diagnostics) });
   } catch (error) {
     await req.respond({ body: JSON.stringify({ error }) });
