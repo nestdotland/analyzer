@@ -24,8 +24,8 @@ pub fn tree(filename: String, src: String) -> Array {
 
 #[wasm_bindgen]
 pub fn analyze(src: String) -> Array {
-  let mut analyzer = Analyzer::new(get_default_ts_config(), get_static_rules());
-  Analyzer::analyze(&mut analyzer, "test.ts".to_string(), src, None)
+  Analyzer::new(get_default_ts_config(), get_static_rules())
+    .analyze("test.ts".to_string(), src, None)
     .unwrap()
     .into_iter()
     .map(|d| JsValue::from_serde(&d).unwrap())
