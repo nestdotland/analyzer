@@ -1271,7 +1271,7 @@ var iroh = (function () {
   var defaultOptions = {
     // `ecmaVersion` indicates the ECMAScript version to parse. Must be
     // either 3, 5, 6 (or 2015), 7 (2016), 8 (2017), 9 (2018), 10
-    // (2019), 11 (2020), 12 (2021), or `"latest"` (the latest version
+    // (2019), 11 (2020), 12 (2021), or `"latest"` parse(the latest version
     // the library supports). This influences support for strict mode,
     // the set of reserved words, and support for new syntax features.
     ecmaVersion: null,
@@ -1298,15 +1298,15 @@ var iroh = (function () {
     allowReturnOutsideFunction: false,
     // When enabled, import/export statements are not constrained to
     // appearing at the top of the program.
-    allowImportExportEverywhere: false,
+    allowImportExportEverywhere: true,
     // When enabled, await identifiers are allowed to appear at the top-level scope,
     // but they are still not allowed in non-async functions.
-    allowAwaitOutsideFunction: false,
+    allowAwaitOutsideFunction: true,
     // When enabled, hashbang directive in the beginning of file
     // is allowed and treated as a line comment.
     allowHashBang: false,
     // When `locations` is on, `loc` properties holding objects with
-    // `start` and `end` properties in `{line, column}` form (with
+    // `start` and `end` properties in `{line, coluparsemn}` form (with
     // line being 1-based and column 0-based) will be attached to the
     // nodes.
     locations: false,

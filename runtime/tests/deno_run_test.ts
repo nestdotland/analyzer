@@ -5,6 +5,8 @@ import { FnRules as fnSig } from "../rules.ts";
 
 let analyzer = new Analyze(fnSig);
 let testCases = [
+  // TODO(@divy-work): Top level await is not supported at eval and REPL at the moment.
+  //  { code: "await Deno.run();", name: "Top level await"},
   { code: "Deno.run()", name: "Deno.run()" },
   { code: "Deno['run']()", name: "Deno['run']()" },
   { code: `const r = Deno.run; r();`, name: "Reassigned call" },

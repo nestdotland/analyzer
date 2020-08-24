@@ -53,8 +53,9 @@ export class Analyze {
           "/runtime.ts": code,
         },
         {
-          module: "es2015"
-        }
+          target: "es3",
+          module: "esnext",
+        },
       );
       typescriptDiagnostics = diagnostics;
       js = emit;
@@ -63,6 +64,7 @@ export class Analyze {
       presets: [[babelPresetEnv, { targets: "> 0.25%, not dead" }]],
       plugins: [babelPluginTopAwait],
     };
+    console.log(js);
     // @ts-ignore
     let out = babelCore.transform(js, config);
     const runtimeDiagnostics = await runtimeAnalyze(out.code, this.sig);

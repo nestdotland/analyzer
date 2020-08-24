@@ -22,7 +22,7 @@ export async function dependencyTree(path, options = { fullTree: false }) {
 
   const { fullTree } = options;
 
-  const errors = []
+  const errors = [];
   let circular = false;
   let count = 0;
 
@@ -72,7 +72,7 @@ export async function dependencyTree(path, options = { fullTree: false }) {
           imports: subTree.value,
         });
       } else {
-        errors.push([dependencies[i], subTree.reason])
+        errors.push([dependencies[i], subTree.reason]);
         depTree.push({
           path: dependencies[i],
           imports: [{
