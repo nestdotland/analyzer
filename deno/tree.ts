@@ -15,6 +15,7 @@ export type DependencyTree = Array<{
 export interface IDependencyTree {
   tree: DependencyTree;
   circular: boolean;
+  errors: Array<[string, any]>;
   count: number;
   iterator: IterableIterator<string>;
 }
@@ -33,6 +34,7 @@ export async function dependencyTree(
 
   const { fullTree } = options;
 
+  const errors: Array<[string, any]> = [];
   let circular = false;
   let count = 0;
 
@@ -85,6 +87,7 @@ export async function dependencyTree(
           imports: subTree.value,
         });
       } else {
+        errors.push([dependencies[i], subTree.reason]);
         depTree.push({
           path: dependencies[i],
           imports: [{
@@ -103,9 +106,10 @@ export async function dependencyTree(
     path: url,
     imports: await createTree(url),
   }];
-  return { tree, circular, count, iterator: markedDependencies.keys() };
-} /* Converts a path string to a file URL. */
+  return { tree, circular, count, iterator: markedDependencies.keys(), errors };
+}
 
+/* Converts a path string to a file URL. */
 export function fileURL(path: string, url = "") {
   if (url.match(/^file:\/\/\//) && (!isAbsolute(path))) {
     return new URL(path, url).href;
