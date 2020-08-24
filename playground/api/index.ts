@@ -2,7 +2,7 @@ import { ServerRequest } from "https://deno.land/std@0.66.0/http/server.ts";
 import {
   analyze,
   Diagnostics,
-} from "../../deno/mod.ts";
+} from "https://raw.github.com/nestdotland/analyzer/master/deno/mod.ts";
 
 export default async (req: ServerRequest) => {
   const buf: Uint8Array = await Deno.readAll(req.body);
