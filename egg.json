@@ -2,12 +2,13 @@
   "name": "analyzer",
   "description": "Analyze and detect broken and malicious JavaScript and TypeScript modules.",
   "stable": true,
-  "version": "0.0.3",
+  "version": "0.0.3-rc1",
   "repository": "https://github.com/nestdotland/analyzer",
   "files": [
     "./deno/**/*",
     "./wasm/wasm.js",
     "./mod.ts",
-    "./runtime/**/*"
+    "./runtime/**/*",
+    "./README.md"
   ]
 }
