@@ -13,7 +13,7 @@ Analyze broken and malicious JavaScript and TypeScript modules.
 The analyzer is available for use in Deno. It comes with a default static analyzer and optional (but recommended) runtime analyzer.
 
 ```typescript
-import { analyze } from "https://x.nest.land/analyzer@0.0.2/mod.ts";
+import { analyze } from "https://x.nest.land/analyzer@0.0.3/mod.ts";
 
 const source_code = `Deno.run({ cmd: "shutdown now"})` // oh no! malicious!
 
@@ -60,7 +60,7 @@ Therefore, we have a **runtime analyzer**
 The runtime analyzer comes with the analyzer module published at nest.land
 
 ```typescript
-import { analyze } from "https://x.nest.land/analyzer@0.0.2/mod.ts";
+import { analyze } from "https://x.nest.land/analyzer@0.0.3/mod.ts";
 
 analyze(source_code, {
   runtime: true // enable the runtime analyzer
