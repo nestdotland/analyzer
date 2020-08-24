@@ -29,7 +29,7 @@ export async function analyze(
   let runtimeDiagnostics: RuntimeDiagnostics[] = [];
   if (options?.runtime) {
     let anl = new runtime(FnRules);
-    runtimeDiagnostics.push(await anl.analyze(src));
+    runtimeDiagnostics.push(await anl.analyze(src, true));
   }
   let diagnostics: Diagnostics = {
     static: wasm_analyze(src),

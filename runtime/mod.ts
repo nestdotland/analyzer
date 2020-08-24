@@ -64,7 +64,6 @@ export class Analyze {
       presets: [[babelPresetEnv, { targets: "> 0.25%, not dead" }]],
       plugins: [babelPluginTopAwait],
     };
-    console.log(js);
     // @ts-ignore
     let out = babelCore.transform(js, config);
     const runtimeDiagnostics = await runtimeAnalyze(out.code, this.sig);

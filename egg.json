@@ -2,7 +2,7 @@
   "name": "analyzer",
   "description": "Analyze and detect broken and malicious JavaScript and TypeScript modules.",
   "stable": true,
-  "version": "0.0.3-rc1",
+  "version": "0.0.4",
   "repository": "https://github.com/nestdotland/analyzer",
   "files": [
     "./deno/**/*",
