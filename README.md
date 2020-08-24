@@ -4,6 +4,7 @@ Analyze broken and malicious JavaScript and TypeScript modules.
 
 ![crates.io](https://img.shields.io/crates/v/nest_analyzer.svg)
 ![ci](https://github.com/nestdotland/analyzer/workflows/ci/badge.svg)
+[![nest badge](https://nest.land/badge.svg)](https://nest.land/package/analyzer)
 
 ![flow](https://raw.githubusercontent.com/nestdotland/analyzer/diagrams/analyzer.png)
 
