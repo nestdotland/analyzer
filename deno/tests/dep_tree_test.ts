@@ -40,58 +40,6 @@ Test.testPlan("dep_tree_test.ts", () => {
         new Set(files.map((file) => toFileURL(path.join(__dirname, file)))),
       );
     });
-
-    // ! This test is not deterministic, it depends on the speed of the asynchronous operations.
-    Test.testCase("Tree", () => {
-      const tree = [{
-        path: "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1.ts",
-        imports: [{
-          path: "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_1.ts",
-          imports: [{
-            path:
-              "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_2.ts",
-            imports: [{
-              path:
-                "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_4.ts",
-              imports: [{
-                path:
-                  "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_6.ts",
-                imports: [{
-                  path: "[Redundant]",
-                  imports: [],
-                }],
-              }],
-            }],
-          }, {
-            path:
-              "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_3.ts",
-            imports: [{
-              path:
-                "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_4.ts",
-              imports: [{
-                path: "[Redundant]",
-                imports: [],
-              }],
-            }, {
-              path:
-                "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_5.ts",
-              imports: [{
-                path:
-                  "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_6.ts",
-                imports: [{
-                  path: "[Redundant]",
-                  imports: [],
-                }],
-              }],
-            }],
-          }],
-        }, {
-          path: "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_6.ts",
-          imports: [],
-        }],
-      }];
-      Test.asserts.assertEquals(basicTree.tree, tree);
-    });
   });
 
   Test.testSuite("Basic full tree", () => {
@@ -119,51 +67,6 @@ Test.testPlan("dep_tree_test.ts", () => {
         new Set(files.map((file) => toFileURL(path.join(__dirname, file)))),
       );
     });
-    Test.testCase("Tree", () => {
-      const tree = [{
-        path: "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1.ts",
-        imports: [{
-          path: "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_1.ts",
-          imports: [{
-            path:
-              "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_2.ts",
-            imports: [{
-              path:
-                "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_4.ts",
-              imports: [{
-                path:
-                  "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_6.ts",
-                imports: [],
-              }],
-            }],
-          }, {
-            path:
-              "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_3.ts",
-            imports: [{
-              path:
-                "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_4.ts",
-              imports: [{
-                path:
-                  "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_6.ts",
-                imports: [],
-              }],
-            }, {
-              path:
-                "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_5.ts",
-              imports: [{
-                path:
-                  "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_6.ts",
-                imports: [],
-              }],
-            }],
-          }],
-        }, {
-          path: "file:///P:/GitHub/analyzer/deno/tests/trees/tree_1/file_6.ts",
-          imports: [],
-        }],
-      }];
-      Test.asserts.assertEquals(basicFullTree.tree, tree);
-    });
   });
 
   Test.testSuite("Complex tree", () => {
@@ -188,27 +91,6 @@ Test.testPlan("dep_tree_test.ts", () => {
         new Set(complexTree.iterator),
         new Set(files.map((file) => toFileURL(path.join(__dirname, file)))),
       );
-    });
-    Test.testCase("Tree", () => {
-      const tree = [{
-        path: "file:///P:/GitHub/analyzer/deno/tests/trees/tree_2/file_1.ts",
-        imports: [{
-          path: "file:///P:/GitHub/analyzer/deno/tests/trees/tree_2/file_3.ts",
-          imports: [{
-            path:
-              "file:///P:/GitHub/analyzer/deno/tests/trees/tree_2/file_4.ts",
-            imports: [{
-              path:
-                "file:///P:/GitHub/analyzer/deno/tests/trees/tree_2/file_1.ts",
-              imports: [{
-                path: "[Circular]",
-                imports: [],
-              }],
-            }],
-          }],
-        }],
-      }];
-      Test.asserts.assertEquals([complexTree.tree[0].imports[0]], tree);
     });
   });
 });
