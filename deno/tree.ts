@@ -3,7 +3,7 @@ import {
   isAbsolute,
   resolve,
 } from "https://x.nest.land/std@0.61.0/path/mod.ts";
-import { tree as extractDependencies } from "./wasm.ts";
+import { tree as extractDependencies } from "../wasm/wasm.js";;
 
 const decoder = new TextDecoder("utf-8");
 
@@ -61,8 +61,8 @@ export async function dependencyTree(
 
     const src = await fetchData(url);
 
-    const dependencies = extractDependencies("", src)
-      .map((dep) => resolveURL(dep, url));
+    const dependencies: string[] = extractDependencies("", src)
+      .map((dep: string) => resolveURL(dep, url));
 
     const resolvedDependencies = dependencies
       .map((dep) => {
