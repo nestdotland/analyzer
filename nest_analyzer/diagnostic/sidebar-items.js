@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Diagnostic","A Diagnostic that will be returned after analysis"],["Location",""]]});

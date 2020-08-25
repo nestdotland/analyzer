@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["BanDenoRun","Rule `ban-deno-run` (BanDenoRun)"]]});

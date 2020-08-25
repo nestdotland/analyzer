@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["nest_analyzer"] = [{"text":"impl Clone for Context","synthetic":false,"types":[]},{"text":"impl Clone for AnalyzeOptions","synthetic":false,"types":[]},{"text":"impl Clone for Location","synthetic":false,"types":[]},{"text":"impl Clone for Diagnostic","synthetic":false,"types":[]},{"text":"impl Clone for SwcDiagnosticBuffer","synthetic":false,"types":[]},{"text":"impl Clone for SwcErrorBuffer","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
