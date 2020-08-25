@@ -10,11 +10,11 @@ await init(source);
 
 // TODO(@divy-work): Typings...
 export interface Diagnostics {
-  static: any;
+  static: unknown;
   runtime?: RuntimeDiagnostics[];
 }
 
-export function tree(filename: string, src: string) {
+export function tree(filename: string, src: string): string[] {
   return wasm_tree(filename, src);
 }
 
