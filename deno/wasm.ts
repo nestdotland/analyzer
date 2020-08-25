@@ -14,7 +14,7 @@ export interface Diagnostics {
   runtime?: RuntimeDiagnostics[];
 }
 
-export function tree(filename: string, src: string): string [] {
+export function tree(filename: string, src: string): string[] {
   return wasm_tree(filename, src);
 }
 
