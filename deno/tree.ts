@@ -15,28 +15,35 @@ export type DependencyTree = Array<{
 export interface IDependencyTree {
   tree: DependencyTree;
   circular: boolean;
-  errors: Array<[string, any]>;
+  errors: Array<[string, unknown]>;
   count: number;
   iterator: IterableIterator<string>;
 }
 
 export interface TreeOptions {
-  fullTree: boolean;
+  fullTree?: boolean;
+  onDependencyFound?: (count: number) => void;
+  onDependencyResolved?: (count: number) => void;
 }
 
 /** Build a dependency tree from a relative path or remote HTTP URL.
  * Analyses simultaneously the constructed tree. */
 export async function dependencyTree(
   path: string,
-  options: TreeOptions = { fullTree: false },
+  {
+    fullTree = false,
+    onDependencyFound = () => {},
+    onDependencyResolved = () => {},
+  }: TreeOptions = {},
 ): Promise<IDependencyTree> {
   const markedDependencies = new Map<string, DependencyTree>();
 
-  const { fullTree } = options;
-
-  const errors: Array<[string, any]> = [];
+  const errors: Array<[string, unknown]> = [];
   let circular = false;
   let count = 0;
+
+  let foundDependenciesCount = 0;
+  let resolvedDependenciesCount = 0;
 
   async function createTree(
     url: string,
@@ -54,11 +61,12 @@ export async function dependencyTree(
 
     const src = await fetchData(url);
 
-    const dependencies: string[] = extractDependencies("", src)
-      .map((dep: string) => resolveURL(dep, url));
+    const dependencies = extractDependencies("", src)
+      .map((dep) => resolveURL(dep, url));
 
     const resolvedDependencies = dependencies
       .map((dep) => {
+        onDependencyFound(++foundDependenciesCount);
         if (parents.includes(dep)) {
           circular = true;
           return "[Circular]";
@@ -71,7 +79,7 @@ export async function dependencyTree(
             ? Promise.resolve(markedDependencies.get(dep) as DependencyTree)
             : createTree("[Redundant]");
         }
-        count++;
+        if (dep !== "[Circular]") count++;
         return createTree(dep, [url, ...parents]);
       });
     const settledDependencies = await Promise.allSettled(
@@ -79,6 +87,7 @@ export async function dependencyTree(
     );
 
     for (let i = 0; i < dependencies.length; i++) {
+      onDependencyResolved(++resolvedDependenciesCount);
       const subTree = settledDependencies[i];
 
       if (subTree.status === "fulfilled") {
@@ -110,11 +119,13 @@ export async function dependencyTree(
 }
 
 /* Converts a path string to a file URL. */
-export function fileURL(path: string, url = "") {
+export function toFileURL(path: string, url = "") {
   if (url.match(/^file:\/\/\//) && (!isAbsolute(path))) {
     return new URL(path, url).href;
   }
-  let resolvedPath = resolve(path).replace(/\\/g, "/");
+
+  let resolvedPath = (isAbsolute(path) ? path : resolve(path))
+    .replace(/\\/g, "/");
 
   // Windows drive letter must be prefixed with a slash
   if (resolvedPath[0] !== "/") {
@@ -135,7 +146,7 @@ export function resolveURL(path: string, base = "") {
   if (base.match(/^https?:\/\//)) {
     return new URL(path, base).href;
   }
-  return fileURL(path, base);
+  return toFileURL(path, base);
 }
 
 /* Fetch data from file: or https: urls */
@@ -144,6 +155,8 @@ async function fetchData(url: string) {
     const data = await fetch(url);
     return data.text();
   }
-  const data = await Deno.readFile(resolve(fromFileUrl(url)));
+  const data = await Deno.readFile(
+    resolve(decodeURIComponent(fromFileUrl(url))),
+  );
   return decoder.decode(data);
 }
