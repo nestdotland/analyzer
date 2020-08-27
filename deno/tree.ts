@@ -3,7 +3,7 @@ import {
   isAbsolute,
   resolve,
 } from "https://x.nest.land/std@0.61.0/path/mod.ts";
-import { tree as extractDependencies } from "../wasm/wasm.js";;
+import { tree as extractDependencies, default as init, source } from "../wasm/wasm.js";;
 
 const decoder = new TextDecoder("utf-8");
 
@@ -25,6 +25,8 @@ export interface TreeOptions {
   onDependencyFound?: (count: number) => void;
   onDependencyResolved?: (count: number) => void;
 }
+
+await init(source);
 
 /** Build a dependency tree from a relative path or remote HTTP URL.
  * Analyses simultaneously the constructed tree. */
