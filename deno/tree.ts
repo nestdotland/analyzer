@@ -3,7 +3,7 @@ import {
   isAbsolute,
   resolve,
 } from "https://x.nest.land/std@0.61.0/path/mod.ts";
-import { tree as extractDependencies } from "../wasm/wasm.js";;
+import init, { tree as extractDependencies, source } from "../wasm/wasm.js";;
 
 const decoder = new TextDecoder("utf-8");
 
@@ -22,9 +22,11 @@ export interface IDependencyTree {
 
 export interface TreeOptions {
   fullTree?: boolean;
-  onDependencyFound?: (count: number) => void;
-  onDependencyResolved?: (count: number) => void;
+  onImportFound?: (count: number) => void;
+  onImportResolved?: (count: number) => void;
 }
+
+await init(source);
 
 /** Build a dependency tree from a relative path or remote HTTP URL.
  * Analyses simultaneously the constructed tree. */
@@ -32,8 +34,8 @@ export async function dependencyTree(
   path: string,
   {
     fullTree = false,
-    onDependencyFound = () => {},
-    onDependencyResolved = () => {},
+    onImportFound = () => {},
+    onImportResolved = () => {},
   }: TreeOptions = {},
 ): Promise<IDependencyTree> {
   const markedDependencies = new Map<string, DependencyTree>();
@@ -42,8 +44,8 @@ export async function dependencyTree(
   let circular = false;
   let count = 0;
 
-  let foundDependenciesCount = 0;
-  let resolvedDependenciesCount = 0;
+  let foundImportsCount = 0;
+  let resolvedImportsCount = 0;
 
   async function createTree(
     url: string,
@@ -66,7 +68,7 @@ export async function dependencyTree(
 
     const resolvedDependencies = dependencies
       .map((dep) => {
-        onDependencyFound(++foundDependenciesCount);
+        onImportFound(++foundImportsCount);
         if (parents.includes(dep)) {
           circular = true;
           return "[Circular]";
@@ -87,7 +89,7 @@ export async function dependencyTree(
     );
 
     for (let i = 0; i < dependencies.length; i++) {
-      onDependencyResolved(++resolvedDependenciesCount);
+      onImportResolved(++resolvedImportsCount);
       const subTree = settledDependencies[i];
 
       if (subTree.status === "fulfilled") {
