@@ -8,7 +8,11 @@ await init();
  * Build a dependency tree from a relative path or remote HTTP URL.
  * Analyses simultaneously the constructed tree.
  * @param {string} path 
- * @param {{ fullTree: boolean }} options 
+ * @param {{
+    fullTree?: boolean;
+    onImportFound?: (count: number) => void;
+    onImportResolved?: (count: number) => void
+  }} options 
  * @returns {Promise<{
     tree: DependencyTree;
     circular: boolean;
@@ -17,7 +21,13 @@ await init();
     iterator: IterableIterator<string>;
   }>}
  */
-export async function dependencyTree(path, options = { fullTree: false }) {
+export async function dependencyTree(
+  path, {
+    fullTree = false,
+    onImportFound = () => {},
+    onImportResolved = () => {},
+  } = {},
+) {
   const markedDependencies = new Map();
 
   const { fullTree } = options;
@@ -25,6 +35,9 @@ export async function dependencyTree(path, options = { fullTree: false }) {
   const errors = [];
   let circular = false;
   let count = 0;
+
+  let foundImportsCount = 0;
+  let resolvedImportsCount = 0;
 
   async function createTree(url, parents = []) {
     if (url.match(/^\[(Circular|Error|Redundant)/)) {
@@ -44,6 +57,7 @@ export async function dependencyTree(path, options = { fullTree: false }) {
 
     const resolvedDependencies = dependencies
       .map((dep) => {
+        onImportFound(++foundImportsCount);
         if (parents.includes(dep)) {
           circular = true;
           return "[Circular]";
@@ -64,6 +78,7 @@ export async function dependencyTree(path, options = { fullTree: false }) {
     );
 
     for (let i = 0; i < dependencies.length; i++) {
+      onImportResolved(++resolvedImportsCount);
       const subTree = settledDependencies[i];
 
       if (subTree.status === "fulfilled") {
