@@ -65,4 +65,7 @@ jobs:
 
       - name: Build WASM
         if: contains(matrix.os, 'ubuntu')
-        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh && cd wasm && deno run -A ./scripts/build.ts
+        run: |
+          curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+          cd analyzer_wasm
+          deno run -A ./scripts/build.ts
