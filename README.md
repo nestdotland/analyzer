@@ -1,4 +1,4 @@
-# `nest_analyzer` 
+# `nest_analyzer`
 
 Analyze broken and malicious JavaScript and TypeScript modules.
 
@@ -16,47 +16,19 @@ The analyzer is available for use in Deno. It comes with a default static analyz
 import { analyze } from "https://x.nest.land/analyzer@0.0.4/mod.ts";
 
 // oh no! malicious!
-const source_code = `Deno.run({ cmd: "shutdown now"})` 
+const source_code = `Deno["run"]({ cmd: "shutdown now"})`
 
 // analyzer to the rescue ;)
-const diagnostics = await analyze(source_code, {
-  runtime: true,
-});
+const diagnostics = await analyze(source_code);
 ```
 
 ## Architecture
 
 nest_analyzer has a runtime and static analyzer.
 
-#### Static analyzer
-
-The static analyzer is available as a rust crate and a wasm module for instant use in the Web and Deno.
-
-Rules:
-
-- [x] `ban-deno-run` - Report if module uses `Deno.run();`
-- [x] `ban-deno-plugin` - Report if module uses `Deno.openPlugin();`
-
-Dynamic rules:
-
-- [x] `check-deno-run` - Check if the given command is executed with `Deno.run();`
-
-The static analyzer merely scans the AST and collects basic diagnostics.
-For example:
-
-```typescript
-Deno.run();
-// catched by the static analyzer
-
-Deno["run"]();
-// undetected by the static analyzer
-```
-
-Since module authors with malicious intent can obfuscate their function calls to bypass the static analyzer, it is not ideal to depend on it.
-
-Therefore, we have a **runtime analyzer**
-
 #### Runtime analyzer
+
+> The static code analzer was removed recently as module authors with malicious intent can obfuscate their function calls to bypass the static analyzer, it is not ideal to depend on it.
 
 The runtime analyzer comes with the analyzer module published at nest.land
 
@@ -75,6 +47,11 @@ Runtime analysis is a tideous process.
 Typescript code is compiled and bundled to es6, which is then parsed into its AST.
 AST nodes are injected with custom listeners using a fork of `Iroh.js`.
 Finally the code is _safely_ evaluated and diagnostics are collected based on the inbuilt rules.
+
+#### Static analyzer
+
+The static analyzer uses Sauron to collect quality metrics. It is avaliable as a wasm module for use on the Web and Deno.
+It collects diagnostics based on linting techniques, project structure, etc which can be used for calculation module score among other modules.
 
 ## Contributing
 
