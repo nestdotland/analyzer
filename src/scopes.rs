@@ -276,7 +276,7 @@ impl ScopeVisitor {
     if obj.props.is_empty() {
       return;
     }
-    use crate::swc_ecma_ast::Prop::*;
+    use swc_ecma_ast::Prop::*;
     for prop in obj.props.iter() {
       if let swc_ecma_ast::PropOrSpread::Prop(prop_expr) = prop {
         match &**prop_expr {
@@ -513,7 +513,7 @@ impl Visit for ScopeVisitor {
     import_spec: &swc_ecma_ast::ImportSpecifier,
     _parent: &dyn Node,
   ) {
-    use crate::swc_ecma_ast::ImportSpecifier::*;
+    use swc_ecma_ast::ImportSpecifier::*;
     let local = match import_spec {
       Named(named) => &named.local,
       Default(default) => &default.local,
@@ -565,7 +565,7 @@ impl Visit for ScopeVisitor {
     var_decl: &swc_ecma_ast::VarDecl,
     parent: &dyn Node,
   ) {
-    use crate::swc_ecma_ast::VarDeclKind;
+    use swc_ecma_ast::VarDeclKind;
 
     let var_kind = match &var_decl.kind {
       VarDeclKind::Var => BindingKind::Var,
@@ -730,8 +730,8 @@ impl Visit for ScopeVisitor {
 #[cfg(test)]
 mod tests {
   use super::*;
-  use crate::swc_util;
-  use crate::swc_util::AstParser;
+  use swc_util;
+  use swc_util::AstParser;
 
   fn test_scopes(source_code: &str) -> Scope {
     let ast_parser = AstParser::new();

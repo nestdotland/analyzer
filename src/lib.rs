@@ -3,5 +3,7 @@
 
 mod tools;
 mod parser;
+mod scopes;
+
 pub mod tree;
 
