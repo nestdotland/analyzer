@@ -730,12 +730,12 @@ impl Visit for ScopeVisitor {
 #[cfg(test)]
 mod tests {
   use super::*;
-  use swc_util;
-  use swc_util::AstParser;
+  use crate::parser;
+  use crate::parser::AstParser;
 
   fn test_scopes(source_code: &str) -> Scope {
     let ast_parser = AstParser::new();
-    let syntax = swc_util::get_default_ts_config();
+    let syntax = crate::parser::get_default_ts_config();
     let module = ast_parser
       .parse_module("file_name.ts", syntax, source_code)
       .unwrap();
