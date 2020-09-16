@@ -1,18 +1,18 @@
 import init, {
   tree as extractDependencies,
-} from "https://raw.githubusercontent.com/nestdotland/analyzer/master/wasm/pkg/nest_analyzer_wasm.js";
+} from "https://raw.githubusercontent.com/nestdotland/analyzer/master/analyzer_wasm/pkg/nest_analyzer_wasm.js";
 
 await init();
 
 /**
  * Build a dependency tree from a relative path or remote HTTP URL.
  * Analyses simultaneously the constructed tree.
- * @param {string} path 
+ * @param {string} path
  * @param {{
     fullTree?: boolean;
     onImportFound?: (count: number) => void;
     onImportResolved?: (count: number) => void
-  }} options 
+  }} options
  * @returns {Promise<{
     tree: DependencyTree;
     circular: boolean;
