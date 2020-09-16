@@ -1,3 +1,5 @@
+[workspace]
+
 [package]
 name = "nest_analyzer_wasm"
 description = "WASM module for the nest_analyzer"
@@ -12,7 +14,7 @@ crate-type = ["cdylib"]
 [dependencies]
 wasm-bindgen = { version = "0.2.64", features = ["serde-serialize"] }
 wee_alloc = { version = "0.4.5", optional = true }
-nest_analyzer = { path = "../" }
+analyzer_tree = { path = "../analyzer_tree" }
 js-sys = "0.3.44"
 console_error_panic_hook = "0.1.6"
 

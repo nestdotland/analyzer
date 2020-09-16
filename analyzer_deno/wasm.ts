@@ -1,40 +1,21 @@
 import init, {
   source,
   tree as wasm_tree,
-  analyze as wasm_analyze,
 } from "../analyzer_wasm/wasm.js";
 import { Analyze as runtime, RuntimeDiagnostics } from "../analyzer_runtime/mod.ts";
 import { FnRules } from "../analyzer_runtime/rules.ts";
 
 await init(source);
 
-// TODO(@divy-work): Typings...
-export interface Diagnostics {
-  static: unknown;
-  runtime?: RuntimeDiagnostics[];
-}
-
 export function tree(filename: string, src: string): string[] {
   return wasm_tree(filename, src);
 }
 
-interface AnalyzerOptions {
-  runtime?: boolean;
-}
-
 export async function analyze(
   src: string,
-  options?: AnalyzerOptions,
-): Promise<Diagnostics> {
+): Promise<RuntimeDiagnostics[]> {
   let runtimeDiagnostics: RuntimeDiagnostics[] = [];
-  if (options?.runtime) {
-    let anl = new runtime(FnRules);
-    runtimeDiagnostics.push(await anl.analyze(src, true));
-  }
-  let diagnostics: Diagnostics = {
-    static: wasm_analyze(src),
-    runtime: runtimeDiagnostics,
-  };
-
-  return diagnostics;
+  let anl = new runtime(FnRules);
+  runtimeDiagnostics.push(await anl.analyze(src, true));
+  return runtimeDiagnostics;
 }

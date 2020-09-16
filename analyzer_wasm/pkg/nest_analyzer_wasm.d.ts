@@ -6,23 +6,12 @@
 * @returns {Array<any>}
 */
 export function tree(filename: string, src: string): Array<any>;
-/**
-* @param {string} src
-* @returns {Array<any>}
-*/
-export function analyze(src: string): Array<any>;
 
-export type InitInput =
-  | RequestInfo
-  | URL
-  | Response
-  | BufferSource
-  | WebAssembly.Module;
+export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
   readonly tree: (a: number, b: number, c: number, d: number) => number;
-  readonly analyze: (a: number, b: number) => number;
   readonly __wbindgen_malloc: (a: number) => number;
   readonly __wbindgen_realloc: (a: number, b: number, c: number) => number;
   readonly __wbindgen_free: (a: number, b: number) => void;
@@ -36,6 +25,5 @@ export interface InitOutput {
 *
 * @returns {Promise<InitOutput>}
 */
-export default function init(
-  module_or_path?: InitInput | Promise<InitInput>,
-): Promise<InitOutput>;
+export default function init (module_or_path?: InitInput | Promise<InitInput>): Promise<InitOutput>;
+        

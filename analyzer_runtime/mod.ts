@@ -34,7 +34,7 @@ export async function runtimeAnalyze(
 }
 
 export interface RuntimeDiagnostics {
-  typescriptDiagnostics?: Deno.DiagnosticItem;
+  typescriptDiagnostics?: Deno.Diagnostic;
   runtimeDiagnostics?: any;
 }
 

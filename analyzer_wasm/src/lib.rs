@@ -3,10 +3,7 @@ use js_sys::Array;
 use std::panic;
 use wasm_bindgen::prelude::{wasm_bindgen, JsValue};
 
-use nest_analyzer::analyzer::Analyzer;
-use nest_analyzer::checks::get_static_rules;
-use nest_analyzer::swc_util::get_default_ts_config;
-use nest_analyzer::tree;
+use analyzer_tree::tree;
 
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
@@ -19,15 +16,5 @@ pub fn tree(filename: String, src: String) -> Array {
     .unwrap()
     .into_iter()
     .map(JsValue::from)
-    .collect()
-}
-
-#[wasm_bindgen]
-pub fn analyze(src: String) -> Array {
-  Analyzer::new(get_default_ts_config(), get_static_rules())
-    .analyze("test.ts".to_string(), src, None)
-    .unwrap()
-    .into_iter()
-    .map(|d| JsValue::from_serde(&d).unwrap())
     .collect()
 }

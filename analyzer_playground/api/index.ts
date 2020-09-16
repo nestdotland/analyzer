@@ -14,9 +14,7 @@ export async function handler(
 ): Promise<APIGatewayProxyResult> {
   const src: string = atob(JSON.parse(event.body!).body);
   try {
-    let diagnostics: Diagnostics = await analyze(src, {
-      runtime: true,
-    });
+    let diagnostics: Diagnostics = await analyze(src);
     return { statusCode: 200, body: JSON.stringify(diagnostics) };
   } catch (error) {
     return { statusCode: 500, body: JSON.stringify({ error }) };
