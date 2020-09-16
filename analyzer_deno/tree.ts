@@ -3,7 +3,10 @@ import {
   isAbsolute,
   resolve,
 } from "https://x.nest.land/std@0.61.0/path/mod.ts";
-import init, { tree as extractDependencies, source } from "../analyzer_wasm/wasm.js";;
+import init, {
+  tree as extractDependencies,
+  source,
+} from "../analyzer_wasm/wasm.js";
 
 const decoder = new TextDecoder("utf-8");
 

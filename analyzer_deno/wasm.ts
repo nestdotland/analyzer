@@ -2,7 +2,10 @@ import init, {
   source,
   tree as wasm_tree,
 } from "../analyzer_wasm/wasm.js";
-import { Analyze as runtime, RuntimeDiagnostics } from "../analyzer_runtime/mod.ts";
+import {
+  Analyze as runtime,
+  RuntimeDiagnostics,
+} from "../analyzer_runtime/mod.ts";
 import { FnRules } from "../analyzer_runtime/rules.ts";
 
 await init(source);

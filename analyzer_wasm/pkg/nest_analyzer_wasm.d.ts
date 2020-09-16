@@ -7,7 +7,12 @@
 */
 export function tree(filename: string, src: string): Array<any>;
 
-export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
+export type InitInput =
+  | RequestInfo
+  | URL
+  | Response
+  | BufferSource
+  | WebAssembly.Module;
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
@@ -25,5 +30,6 @@ export interface InitOutput {
 *
 * @returns {Promise<InitOutput>}
 */
-export default function init (module_or_path?: InitInput | Promise<InitInput>): Promise<InitOutput>;
-        
+export default function init(
+  module_or_path?: InitInput | Promise<InitInput>,
+): Promise<InitOutput>;

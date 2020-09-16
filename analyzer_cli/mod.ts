@@ -8,7 +8,7 @@ const result = await new Command()
 const input: string = result.args[0];
 
 const src: string = await Deno.readTextFile(input);
-console.log(src)
+console.log(src);
 let diagnostics = await analyze(
   src,
 );

@@ -22,7 +22,8 @@ await init();
   }>}
  */
 export async function dependencyTree(
-  path, {
+  path,
+  {
     fullTree = false,
     onImportFound = () => {},
     onImportResolved = () => {},
