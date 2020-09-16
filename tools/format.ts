@@ -4,12 +4,12 @@ console.log("rustfmt");
 const checkArgs = check ? ["--check"] : [];
 
 const p2 = await Deno.run({
-  cmd: ["rustfmt", ...checkArgs, "src/lib.rs"],
+  cmd: ["rustfmt", ...checkArgs, "src/analyzer_tree/lib.rs"],
   stdin: "null",
 }).status();
 
 if (p2.code !== 0) {
-  throw new Error(`Failed: rustfmt ${check ? "--check" : ""} src/lib.rs`);
+  throw new Error(`Failed: rustfmt ${check ? "--check" : ""} src/analyzer_tree/lib.rs`);
 }
 
 console.log("deno fmt");
