@@ -1,4 +1,3 @@
-
 // This is a fork of the `deno_swc` and `deno` swc utility.
 // Copyright 2020 the deno_swc team. MIT license.
 // Copyright 2020 the Deno authors. All rights reserved. MIT license.

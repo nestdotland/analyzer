@@ -5,10 +5,10 @@
   "version": "0.0.6",
   "repository": "https://github.com/nestdotland/analyzer",
   "files": [
-    "./deno/**/*",
-    "./wasm/wasm.js",
+    "./analyzer_deno/**/*",
+    "./analyzer_wasm/wasm.js",
     "./mod.ts",
-    "./runtime/**/*",
+    "./analyzer_runtime/**/*",
     "./README.md"
   ]
 }
